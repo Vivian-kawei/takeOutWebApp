@@ -1,38 +1,30 @@
 <template>
-<div>
-  <div clas="swipe-warrper">
-    <div class="address">
-      <span>送至：</span>
-      <span>深圳职业技术学院北校区A座</span>
-      <p></p>
-    </div>
-    <div class="seach">
-      <p></p>
-      <span>搜索</span>
-    </div>
-  </div>
+<div class="content">
   <router-view></router-view>
   <div class="tab">
     <div class="tab-item">
       <div class="tab-wrap">
-        <i class="icon-home"></i>
         <router-link to="home">首页</router-link>
+        <i class="icon-home"></i>
       </div>
     </div>
     <div class="tab-item">
-
-      <router-link to="order">订单</router-link>
+      <div class="tab-wrap">
+        <router-link to="order">订单</router-link>
+        <i class="icon-order"></i>
+      </div>
     </div>
     <div class="tab-item">
-      <router-link to="me">我的</router-link>
+      <div class="tab-wrap">
+        <router-link to="me">我的</router-link>
+        <i class="icon-mine"></i>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-  var hash = window.location.hash;
-  console.log(hash);
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -44,24 +36,39 @@
     height: 50px
     line-height: 50px
     background-color: #f9f9f9
+    border-top: 1px solid rgba(7, 17, 27, 0.1)
     .tab-item
       flex: 1
       text-align: center
       padding: 6px 0
       .tab-wrap
-        .icon-home
+        width: 100%
+        height: 100%
+        position: relative
+        i
+          width: 100%
           display: block
           line-height: 24px
           font-size: 24px
           color: #999999
+          position: absolute
+          left: 0
+          top: 0
         a
+          width: 100%
           display: block
           font-size: 14px
           line-height: 14px
           text-decoration: none;
           color: #999999
+          position: absolute
+          left: 0
+          bottom: 0
           &.router-link-active
             color: #ff2d4b
+            &+i
+              color: #ff2d4b
+
 
   
 </style>
