@@ -54,6 +54,8 @@ export default{
     border-top: 1px solid rgba(7, 17, 27, 0.1)
     .tab-item
       flex: 1
+      height: 100%
+      box-sizing: border-box
       text-align: center
       padding: 6px 0
       .tab-wrap
