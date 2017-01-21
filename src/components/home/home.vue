@@ -1,53 +1,58 @@
 <template>
-<div class="home" ref="home">
-  <div class="home-warrper">
-    <div class="swipe-warrper">
-      <v-swiper></v-swiper>
-      <div class="tool">
-        <div class="address">
-          <span>送至：</span>
-          <span class="adde">深圳职业技术学院北校区A座</span>
-          <i class="icon-drop_down"></i>
-        </div>
-        <div class="search">
-          <i class="icon-search"></i>
-          <span>搜索</span>
-        </div>
-      </div>  
-    </div>
-    <div class="species">
-      <div class="species-warrper" v-for="specie in species" :href="specie.url">
-        <img style="width: 44px;" :src="specie.src"></i>
-        <p v-text="specie.text"></p>
+<div class="content">
+  <div class="home" ref="home">
+    <div class="home-warrper">
+      <div class="swipe-warrper">
+        <v-swiper></v-swiper>
+        <div class="tool">
+          <div class="address">
+            <span>送至：</span>
+            <span class="adde">深圳职业技术学院北校区A座</span>
+            <i class="icon-drop_down"></i>
+          </div>
+          <div class="search">
+            <i class="icon-search"></i>
+            <span>搜索</span>
+          </div>
+        </div>  
       </div>
-    </div>
-    <split></split>
-    <div class="seller-warrper" >
-    <div class="title border-1px">全部商户</div>
-      <div class="seller">
-        <ul v-if="sellers">
-          <li class="seller-list border-1px" v-for="(seller, id) in sellers">
-            <div class="avatar">
-              <img width="76" height="56" v-bind:src="seller.avatar">
-            </div>
-            <div class="seller-content">
-              <div class="seller-name">
-                <span class="name">{{seller.name}}</span>
-              </div>
-              <div class="sale">
-                <span class="text">月售{{seller.sellCount}}单</span>
-                <span class="time">{{seller.deliveryTime}}分钟</span>
-              </div>
-              <div class="dilivery">
-                <span class="text">起送￥{{seller.minPrice}}</span>
-                <span class="text">配送￥{{seller.deliveryPrice}}</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+      <div class="species">
+        <div class="species-warrper" v-for="specie in species" :href="specie.url">
+          <img style="width: 44px;" :src="specie.src"></i>
+          <p v-text="specie.text"></p>
+        </div>
+      </div>
+      <split></split>
+      <div class="seller-warrper" >
+      <div class="title border-1px">全部商户</div>
+        <div class="seller">
+          <ul v-if="sellers">
+            <li class="seller-list border-1px" v-for="(seller, index) in sellers">
+              <router-link :to="{name: 'seller', params: {id: seller.id}}">
+                <div class="avatar">
+                  <img width="76" height="56" v-bind:src="seller.avatar">
+                </div>
+                <div class="seller-content">
+                  <div class="seller-name">
+                    <span class="name">{{seller.name}}</span>
+                  </div>
+                  <div class="sale">
+                    <span class="text">月售{{seller.sellCount}}单</span>
+                    <span class="time">{{seller.deliveryTime}}分钟</span>
+                  </div>
+                  <div class="dilivery">
+                    <span class="text">起送￥{{seller.minPrice}}</span>
+                    <span class="text">配送￥{{seller.deliveryPrice}}</span>
+                  </div>
+                </div>
+              </router-link>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+  <v-navigation></v-navigation>
 </div>
 </template>
 
@@ -55,6 +60,7 @@
 import BScroll from 'better-scroll';
 import split from 'components/split/split';
 import swiper from 'components/home/swiper/swiper';
+import navigation from 'components/navigation/navigation';
 export default{
     props: {
       sellers: {
@@ -100,7 +106,8 @@ export default{
     },
     components: {
       split,
-      'v-swiper': swiper
+      'v-swiper': swiper,
+      'v-navigation': navigation
     }
 };
 </script>
@@ -198,33 +205,43 @@ export default{
           padding: 20px 10px
           font-size: 0
           border-1px(rgba(7, 17, 27, 0.1))
-          .seller-content
-            margin:0px 0 0 10px
-            .seller-name
-              .name
-                font-size: 16px
-                line-height: 24px
-                font-weight: 700
-                color: #333333
-            .sale
-              .text
-                font-size: 10px
-                line-height: 16px
-              .time 
-                display: inline-block
-                position: absolute
-                font-size: 10px
-                line-height: 16px
-                right: 10px
-            .dilivery
-              .text
-                font-size: 10px
-                line-height: 16px
-                border-right: 1px solid rgba(7, 17, 27, 0.1)
-                padding-right: 7px
-                &:last-child
-                  border-right: 0
-                  padding-left: 7px
+          a
+            width: 100%
+            height: 100%
+            display: block
+            .avatar
+              display: inline-block
+              width: 76px
+              height: 56px
+            .seller-content
+              display: inline-block
+              vertical-align: top
+              margin:0px 0 0 10px
+              .seller-name
+                .name
+                  font-size: 16px
+                  line-height: 24px
+                  font-weight: 700
+                  color: #333333
+              .sale
+                .text
+                  font-size: 10px
+                  line-height: 16px
+                .time 
+                  display: inline-block
+                  position: absolute
+                  font-size: 10px
+                  line-height: 16px
+                  right: 10px
+              .dilivery
+                .text
+                  font-size: 10px
+                  line-height: 16px
+                  border-right: 1px solid rgba(7, 17, 27, 0.1)
+                  padding-right: 7px
+                  &:last-child
+                    border-right: 0
+                    padding-left: 7px
 
 
 

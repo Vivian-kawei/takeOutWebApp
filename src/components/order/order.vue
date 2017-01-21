@@ -1,19 +1,24 @@
 <template>
-<div class="order">
-  <div class="header">
-    <h1>订单</h1>
+<div class="content">
+  <div class="order">
+    <div class="header">
+      <h1>订单</h1>
+    </div>
+    <split></split>
+    <div class="order-content">
+    </div>
   </div>
-  <split></split>
-  <div class="order-content">
-  </div>
+  <v-navigation></v-navigation>
 </div>
 </template>
 
 <script>
 import split from 'components/split/split';
+import navigation from 'components/navigation/navigation';
 export default{
   components: {
-    split
+    split,
+    'v-navigation': navigation
   }
 };
 </script>

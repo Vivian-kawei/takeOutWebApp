@@ -1,27 +1,31 @@
 <template>
-<div class="me">
-  <div class="header">
-    <div class="dse">
-      <p class="username">用户名</p>
-      <i class="icon-set"></i>
-    </div>
-    <div class="userimage">
-    </div>
-  </div>
-  <div class="me-content">
-    <div class="service-warrper">
-      <div class="service" v-for="service in services" :href="service.url">
-        <i :class="service.iconClass"></i>
-        <p v-text="service.text"></p>
+<div class="content">
+  <div class="me">
+    <div class="header">
+      <div class="dse">
+        <p class="username">用户名</p>
+        <i class="icon-set"></i>
+      </div>
+      <div class="userimage">
       </div>
     </div>
-    <split></split>
+    <div class="me-content">
+      <div class="service-warrper">
+        <div class="service" v-for="service in services" :href="service.url">
+          <i :class="service.iconClass"></i>
+          <p v-text="service.text"></p>
+        </div>
+      </div>
+      <split></split>
+    </div>
   </div>
+  <v-navigation></v-navigation>
 </div>
 </template>
 
 <script>
 import split from 'components/split/split';
+import navigation from 'components/navigation/navigation';
 export default{
   data() {
     return {
@@ -45,7 +49,8 @@ export default{
     };
   },
   components: {
-      split
+      split,
+      'v-navigation': navigation
   }
 };
 </script>

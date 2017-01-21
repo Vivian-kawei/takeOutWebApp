@@ -7,6 +7,7 @@ import App from './App';
 import home from 'components/home/home';
 import me from 'components/me/me';
 import order from 'components/order/order';
+import seller from 'components/seller/seller';
 
 import 'common/stylus/index.styl';
 
@@ -20,6 +21,7 @@ let router = new VueRouter({
     { path: '/home', name: 'home', component: home },
     { path: '/me', name: 'me', component: me },
     { path: '/order', name: 'order', component: order },
+    { path: '/seller/:id', name: 'seller', component: seller },
     { path: '/*', name: 'default', component: home }
   ]
 });
