@@ -29,10 +29,13 @@
     <div class="background">
       <img v-bind:src="seller.avatar" width="100%" height="100%">
     </div>
-    <!-- <div v-show="detailShow" class="detail" transition="fade">
+    <div v-show="detailShow" class="detail" transition="fade">
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star v-bind:size="48" v-bind:score="seller.score"></star>
+          </div>
           <div class="title">
             <div class="line"></div>
             <div class="text">优惠信息</div>
@@ -40,8 +43,8 @@
           </div>
           <ul v-if="seller.supports" class="supports">
             <li class="support-item" v-for="item in seller.supports">
-              <span class="icon" v-bind:class="classMap[seller.supports[$index].type]"></span>
-              <span class="text">{{seller.supports[$index].description}}</span>
+              <span class="icon" v-bind:class="classMap[item.type]"></span>
+              <span class="text">{{item.description}}</span>
             </li>
           </ul>
           <div class="title">
@@ -57,11 +60,12 @@
       <div class="detail-close" v-on:click="hideDetail">
         <i class="icon-close"></i>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script>
+  import star from 'components/star/star';
   export default {
     props: {
       seller: {
@@ -84,6 +88,9 @@
     created() {
       console.log(13333, this.seller);
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    components: {
+      star
     }
   };
 </script>
@@ -209,14 +216,12 @@
       width: 100%
       height: 100%
       overflow: auto
-      transition: all 0.5s
+      background: rgba(7, 17, 27, 0.8)
       background-filter: blur(10px)
-      &.fade-transition
-        opacity: 1
-        background: rgba(7, 17, 27, 0.8)
-      &.fade-enter,&.fade-leave
+      &.fade-enter-active,&.fade-leave-active
+        transition: all 0.5s
+      &.fade-enter,&.fade-leave-active
         opacity: 0
-        background: rgba(7, 17, 27, 0)
       .detail-wrapper
         min-height: 100%
         width: 100%

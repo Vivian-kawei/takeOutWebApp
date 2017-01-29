@@ -14,7 +14,7 @@
             <i class="icon-search"></i>
             <span>搜索</span>
           </div>
-        </div>  
+        </div>
       </div>
       <div class="species">
         <div class="species-warrper" v-for="specie in species" :href="specie.url">
@@ -37,6 +37,7 @@
                     <span class="name">{{seller.name}}</span>
                   </div>
                   <div class="sale">
+                    <star :size="24" :score="seller.score"></star>
                     <span class="text">月售{{seller.sellCount}}单</span>
                     <span class="time">{{seller.deliveryTime}}分钟</span>
                   </div>
@@ -61,6 +62,7 @@ import BScroll from 'better-scroll';
 import split from 'components/split/split';
 import swiper from 'components/home/swiper/swiper';
 import navigation from 'components/navigation/navigation';
+import star from 'components/star/star';
 export default{
     props: {
       sellers: {
@@ -106,6 +108,7 @@ export default{
     },
     components: {
       split,
+      'star': star,
       'v-swiper': swiper,
       'v-navigation': navigation
     }
@@ -224,10 +227,14 @@ export default{
                   font-weight: 700
                   color: #333333
               .sale
+                .star
+                  display: inline-block
+                  margin-right: 8px
+                  vertical-align: top
                 .text
                   font-size: 10px
                   line-height: 16px
-                .time 
+                .time
                   display: inline-block
                   position: absolute
                   font-size: 10px
