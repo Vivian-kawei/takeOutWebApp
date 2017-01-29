@@ -28,7 +28,7 @@
         <div class="seller">
           <ul v-if="sellers">
             <li class="seller-list border-1px" v-for="(seller, index) in sellers">
-              <router-link :to="{name: 'seller', params: {id: seller.id, data: seller}}">
+              <router-link :to="{name: 'seller', params: {id: seller.id}}">
                 <div class="avatar">
                   <img width="76" height="56" v-bind:src="seller.avatar">
                 </div>

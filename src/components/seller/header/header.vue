@@ -2,7 +2,7 @@
   <div class="seller-header">
     <div class="content-wrapper">
       <div class="avatar">
-        <img width="64" height="64" v-bind:src="seller.avatar" >
+        <img v-bind:src="seller.avatar" >
       </div>
       <div class="content">
         <div class="title">
@@ -16,10 +16,10 @@
           <span class="icon" v-bind:class="classMap[seller.supports[0].type]"></span>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
-      </div>
-      <div v-if="seller.supports"class="support-count" v-on:click="showDetail">
-        <span class="count">{{seller.supports.length}}个</span>
-        <i class="icon-keyboard_arrow_right"></i>
+        <div v-if="seller.supports"class="support-count" v-on:click="showDetail">
+          <span class="count">{{seller.supports.length}}个</span>
+          <i class="icon-keyboard_arrow_right"></i>
+        </div>
       </div>
     </div>
     <div class="bulletin-wrapper" v-on:click="showDetail">
@@ -100,21 +100,25 @@
 
   .seller-header
     position: relative
-    overflow: hidden
+    height: 135px
     color: #fff
     background: rgba(7, 17, 27, 0.5)
     .content-wrapper
-      position: relative
-      padding:24px 12px 18px 24px
-      font-size: 0
+      width: 100%
+      height: 100%
       .avatar
-        display: inline-block
-        vertical-align: top
+        position: absolute
+        top: 24px
+        left: 24px
         img
+          width: 64px
+          height: 64px
           border-radius: 2px
       .content
-        display: inline-block
-        margin-left: 16px
+        position: absolute
+        top: 22px
+        left: 104px
+        right: 12px
         .title
           margin: 2px 0 8px 0
           .brand
@@ -135,9 +139,16 @@
           line-height: 12px
           font-size: 12px
         .support
+          position: relative
+          padding-left: 14px
+          padding-right: 60px
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
           .icon
-            display: inline-block
-            vertical-align: top
+            position: absolute
+            left: 0
+            bottom: 0
             width: 12px
             height: 12px
             margin-right: 4px
@@ -156,25 +167,28 @@
           .text
             line-height: 12px
             font-size: 10px
-      .support-count
-        position: absolute
-        right: 12px
-        bottom: 14px
-        padding: 0 8px
-        height: 24px
-        line-height: 24px
-        border-radius: 14px
-        background: rgba(0,0,0,0.2)
-        text-align: center
-        .count
-          vertical-align: top
-          font-size: 10px
-        .icon-keyboard_arrow_right
-          margin-left:2px
+        .support-count
+          position: absolute
+          right: 0
+          bottom: -4px
+          padding: 0 8px
+          height: 24px
           line-height: 24px
-          font-size: 10px
+          border-radius: 14px
+          background: rgba(0,0,0,0.2)
+          text-align: center
+          .count
+            vertical-align: top
+            font-size: 10px
+          .icon-keyboard_arrow_right
+            margin-left:2px
+            line-height: 24px
+            font-size: 10px
     .bulletin-wrapper
-      position: relative
+      position: absolute
+      left: 0
+      right: 0
+      bottom: 0
       height: 28px
       line-height: 28px
       padding: 0 22px 0 12px

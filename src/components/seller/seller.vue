@@ -18,17 +18,27 @@
 <script>
 import header from 'components/seller/header/header.vue';
 export default{
-  data() {
-      return {
-        seller: {}
-      };
+  props: {
+    sellers: {
+      type: Object
+    }
   },
-  mounted() {
-    console.log(this.$route.params.data);
-    /* eslint-disable no-undef */
-    this.seller = this.$route.params.data;
-    /* eslint-disable no-undef */
-    console.log(this.$route.params.data);
+  data() {
+    return {
+      seller: {}
+    };
+  },
+  watch: {
+    sellers: function(val) {
+      if (this.$route.params.id) {
+        this.seller = this.sellers[this.$route.params.id];
+      }
+    }
+  },
+  created() {
+    if (this.$route.params.id && this.sellers) {
+      this.seller = this.sellers[this.$route.params.id];
+    }
   },
   components: {
     'v-header': header
@@ -45,6 +55,7 @@ export default{
       height: 40px
       line-height: 40px
       border-1px(rgba(7, 17, 27, 0.1))
+      background: white
       .seller-tab-item
         flex: 1
         text-align:center
