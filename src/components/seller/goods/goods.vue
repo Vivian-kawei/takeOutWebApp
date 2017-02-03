@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="goods">
     <div class="menu-wrapper" ref="menuwrapper">
       <ul>
@@ -39,7 +40,8 @@
     </div>
     <shopcart ref="shopcart" v-bind:select-foods="selectFoods" v-bind:delivery-price="seller.deliveryPrice" v-bind:min-price="seller.minPrice"></shopcart>
   </div>
-  <!--<food v-bind:food="selectedFood" v-ref:food></food>-->
+  <food v-bind:food="selectedFood" ref="food"></food>
+</div>
 </template>
 
 <script>
@@ -47,7 +49,7 @@
   import shopcart from 'components/seller/shopcart/shopcart';
   import cartcontrol from 'components/seller/cartcontrol/cartcontrol';
   import Vue from 'vue';
-  // import food from 'components/seller/food/food';
+  import food from 'components/seller/food/food';
 
   export default {
     props: {
@@ -148,8 +150,8 @@
     },
     components: {
       shopcart,
-      cartcontrol
-      // food
+      cartcontrol,
+      food
     },
     events: {
       'cart.add'(target) {
