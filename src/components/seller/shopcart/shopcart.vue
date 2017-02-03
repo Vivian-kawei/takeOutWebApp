@@ -10,14 +10,14 @@
           <div class="num" v-show="totalCount>0">{{totalCount}}</div>
         </div>
         <div class="price" v-bind:class="{'hightlight':totalPrice>0}">￥{{totalPrice}}</div>
-        <div class="desc">另需配送费￥{{deliveryPrice}}</div>
+        <div class="desc" @click="dropBeforeEnter">另需配送费￥{{deliveryPrice}}</div>
       </div>
       <div class="content-right" v-on:click.stop.prevent="pay">
         <div class="pay" :class="payClass">{{payDesc}}</div>
       </div>
     </div>
     <div class="ball-container">
-      <transition-group name="drop" tag="div" v-bind:css="false" v-on:before-enter="dropBeforeEnter" v-on:enter="dropEnter" v-on:after-enter="dropAfterEnter">
+      <transition-group class="drop-transition" name="drop" tag="div" v-on:before-enter="dropBeforeEnter" v-on:enter="dropEnter" v-on:after-enter="dropAfterEnter">
         <div v-for="ball in balls" :key="ball" v-show="ball.show" class="ball">
           <div class="inner inner-hook"></div>
         </div>
@@ -182,7 +182,7 @@ import BScroll from 'better-scroll';
         window.alert(`支付${this.totalPrice}元`);
       },
       dropBeforeEnter(el) {
-        console.log(2333, el);
+        console.log(2331, el);
         let count = this.balls.length;
         while (count--) {
           let ball = this.balls[count];
@@ -200,7 +200,7 @@ import BScroll from 'better-scroll';
         }
       },
       dropEnter(el) {
-        console.log(2333, el);
+        console.log(2332, el);
         /* eslint-disable no-unused-vars */
         let rf = el.offsetHeight;
         this.$nextTick(() => {
@@ -323,7 +323,7 @@ import BScroll from 'better-scroll';
         left: 32px
         bottom: 22px
         z-index: 200
-        &.drop-transition
+        &.drop-enter-active
           transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
           .inner
             width: 16px

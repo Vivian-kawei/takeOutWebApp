@@ -92,14 +92,14 @@
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       this.goods = this.seller.goods;
-      console.log(100004, this.goods);
-      this.eventHub.$on('cart.add', function(target) {
-        console.log(target);
-      });
     },
     mounted() {
-      this._initScroll();
-      this._calculateHeight();
+      var self = this;
+      self._initScroll();
+      self._calculateHeight();
+      self.eventHub.$on('cart.add', function(target) {
+        self._drop(target);
+      });
     },
     methods: {
       // 体验优化，异步执行小球下落动画
@@ -152,12 +152,6 @@
       shopcart,
       cartcontrol,
       food
-    },
-    events: {
-      'cart.add'(target) {
-        console.log(target);
-        this._drop(target);
-      }
     }
   };
 </script>
@@ -269,14 +263,4 @@
             position: absolute
             right: 0
             bottom: 12px
-
-
-
-
-
-
-
-
-
-
 </style>

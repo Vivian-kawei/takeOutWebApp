@@ -105,6 +105,9 @@
       this._initScroll();
       this._initPics();
     },
+    mounted() {
+      this._initScroll();
+    },
     methods: {
       toggleFavorite(event) {
         if (!event._constructed) {
