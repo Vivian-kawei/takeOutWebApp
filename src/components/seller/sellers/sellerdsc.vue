@@ -41,8 +41,8 @@
         </div>
         <ul v-if="seller.supports" class="supports">
           <li class="support-item border-1px" v-for="item in seller.supports">
-            <span class="icon" :class="classMap[seller.supports.type]"></span>
-            <span class="text">{{seller.supports.description}}</span>
+            <span class="icon" :class="classMap[item.type]"></span>
+            <span class="text">{{item.description}}</span>
           </li>
         </ul>
       </div>
