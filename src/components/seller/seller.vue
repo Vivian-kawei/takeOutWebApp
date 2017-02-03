@@ -3,15 +3,16 @@
     <v-header v-bind:seller="seller"></v-header>
     <div class="seller-tab">
       <div class="seller-tab-item">
-        <router-link :to="{path: '/goods'}">商品</router-link>
+        <router-link :to="{path: '/seller/' + $route.params.id + '/goods'}">商品</router-link>
       </div>
       <div class="seller-tab-item">
-        <router-link :to="{path: '/ratings'}">评论</router-link>
+        <router-link :to="{path: '/seller/' + $route.params.id + '/ratings'}">评论</router-link>
       </div>
       <div class="seller-tab-item">
-        <router-link :to="{path: '/sellerdsc'}">商家</router-link>
+        <router-link :to="{path: '/seller/' + $route.params.id + '/sellerdsc'}">商家</router-link>
       </div>
     </div>
+    <router-view v-bind:seller="seller"></router-view>
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default{
     sellers: function(val) {
       if (this.$route.params.id) {
         this.seller = this.sellers[this.$route.params.id];
+        console.log(100001, this.seller);
       }
     }
   },

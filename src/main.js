@@ -24,10 +24,16 @@ let router = new VueRouter({
     { path: '/home', name: 'home', component: home },
     { path: '/me', name: 'me', component: me },
     { path: '/order', name: 'order', component: order },
-    { path: '/seller/:id', name: 'seller', component: seller },
-    { path: '/goods', name: 'goods', component: goods },
-    { path: '/ratings', name: 'ratings', component: ratings },
-    { path: '/sellerdsc', name: 'sellerdsc', component: sellerdsc },
+    {
+      path: '/seller/:id',
+      name: 'seller',
+      component: seller,
+      children: [
+        { path: 'goods', name: 'goods', component: goods },
+        { path: 'ratings', name: 'ratings', component: ratings },
+        { path: 'sellerdsc', name: 'sellerdsc', component: sellerdsc }
+      ]
+    },
     { path: '/*', name: 'default', component: home }
   ]
 });
