@@ -57,6 +57,7 @@
   import star from 'components/star/star';
   import split from 'components/split/split';
   import ratingselect from 'components/seller/ratingselect/ratingselect';
+  import Vue from 'vue';
 
   const ALL = 2;
   export default {
@@ -74,7 +75,8 @@
           all: '全部',
           positive: '推荐',
           negative: '吐槽'
-        }
+        },
+        eventHub: new Vue()
       };
     },
     created() {
@@ -83,6 +85,21 @@
       this.$nextTick(() => {
         this.scroll = new BScroll(this.$refs.ratings, {
         click: true
+        });
+      });
+    },
+    mounted() {
+      var self = this;
+      self.eventHub.$on('ratingtype.select', function(type) {
+        self.selectType = type;
+        self.$nextTick(() => {
+          self.scroll.refresh();
+        });
+      });
+      self.eventHub.$on('content.toggle', function(onlyContent) {
+        self.onlyContent = onlyContent;
+        self.$nextTick(() => {
+          self.scroll.refresh();
         });
       });
     },
@@ -97,20 +114,6 @@
           return type === this.selectType;
         }
       }
-    },
-    events: {
-        'ratingtype.select'(type) {
-          this.selectType = type;
-          this.$nextTick(() => {
-            this.scroll.refresh();
-          });
-        },
-        'content.toggle'(onlyContent) {
-          this.onlyContent = onlyContent;
-          this.$nextTick(() => {
-            this.scroll.refresh();
-          });
-        }
     },
     filters: {
       formatDate(time) {

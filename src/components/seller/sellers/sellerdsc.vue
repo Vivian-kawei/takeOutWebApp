@@ -95,18 +95,9 @@
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
-    watch: {
-      'seller'() {
-        this._initScroll();
-        this._initPics();
-      }
-    },
-    ready() {
-      this._initScroll();
-      this._initPics();
-    },
     mounted() {
       this._initScroll();
+      this._initPics();
     },
     methods: {
       toggleFavorite(event) {
