@@ -24,22 +24,9 @@ export default{
       type: Object
     }
   },
-  data() {
-    return {
-      seller: {}
-    };
-  },
-  watch: {
-    sellers: function(val) {
-      if (this.$route.params.id) {
-        this.seller = this.sellers[this.$route.params.id];
-        console.log(100001, this.seller);
-      }
-    }
-  },
-  created() {
-    if (this.$route.params.id && this.sellers) {
-      this.seller = this.sellers[this.$route.params.id];
+  computed: {
+    seller() {
+      return this.sellers && this.$route.params.id ? this.sellers[this.$route.params.id] : {};
     }
   },
   components: {

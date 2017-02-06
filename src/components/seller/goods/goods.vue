@@ -59,7 +59,7 @@
     },
     data() {
       return {
-        goods: [],
+        classMap: [],
         listHeight: [],
         scrollY: 0,
         selectedFood: {},
@@ -67,6 +67,10 @@
       };
     },
     computed: {
+      goods() {
+        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+        return this.seller.goods || [];
+      },
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[ i ];
@@ -88,10 +92,6 @@
         });
         return foods;
       }
-    },
-    created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-      this.goods = this.seller.goods;
     },
     mounted() {
       var self = this;

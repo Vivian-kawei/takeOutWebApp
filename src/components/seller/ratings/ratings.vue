@@ -68,7 +68,6 @@
     },
     data() {
       return {
-        ratings: [],
         selectType: ALL,
         onlyContent: true,
         desc: {
@@ -79,9 +78,12 @@
         eventHub: new Vue()
       };
     },
+    computed: {
+      ratings() {
+        return this.seller.ratings || [];
+      }
+    },
     created() {
-      this.ratings = this.seller.ratings;
-      console.log(100005, this.ratings);
       this.$nextTick(() => {
         this.scroll = new BScroll(this.$refs.ratings, {
         click: true

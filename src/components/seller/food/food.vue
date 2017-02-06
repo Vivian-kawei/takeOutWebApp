@@ -1,52 +1,58 @@
 <template>
-  <div v-show="showFlag" class="food" transition="move" ref="food">
-    <div class="food-content">
-      <div class="image-header">
-        <img v-bind:src="food.image">
-        <div class="back" v-on:click="hide">
-          <i class="icon-arrow_lift"></i>
+  <div>
+    <transition name="move">
+      <div v-show="showFlag" class="food" ref="food">
+        <div class="food-content">
+          <div class="image-header">
+            <img v-bind:src="food.image">
+            <div class="back" v-on:click="hide">
+              <i class="icon-arrow_lift"></i>
+            </div>
+          </div>
+          <div class="content">
+            <h1 class="title">{{food.name}}</h1>
+            <div class="detail">
+              <span class="sell-count">月售{{food.sellCount}}份</span>
+              <span class="rating">好评率{{food.rating}}%</span>
+            </div>
+            <div class="price">
+              <span class="now">￥{{food.price}}</span><span v-show="food.oldPrice" class="old">￥{{food.oldPrice}}</span>
+            </div>
+            <div class="cartcontrol-wrapper">
+              <cartcontrol :food="food"></cartcontrol>
+            </div>
+            <transition name="fade">
+              <div v-on:click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
+            </transition>
+          </div>
+          <split v-show="food.info"></split>
+          <div class="info" v-show="food.info">
+            <h1 class="title">商品信息</h1>
+            <p class="text">{{food.info}}</p>
+          </div>
+          <split></split>
+          <div class="rating">
+            <h1 class="title">商品评价</h1>
+            <ratingselect v-bind:select-type="selectType" v-bind:only-content="onlyContent" v-bind:desc="desc" v-bind:ratings="food.ratings"></ratingselect>
+            <div class="rating-wrapper">
+              <ul v-show="food.ratings && food.ratings.length">
+                <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="rating-item">
+                  <div class="user">
+                    <span class="name">{{rating.username}}</span>
+                    <img class="avatar" width="12" height="12" :src="rating.avatar">
+                  </div>
+                  <div class="time">{{rating.rateTime | formatDate}}</div>
+                  <p class="text">
+                    <span  :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}">{{rating.text}}</span>
+                  </p>
+                </li>
+              </ul>
+              <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="content">
-        <h1 class="title">{{food.name}}</h1>
-        <div class="detail">
-          <span class="sell-count">月售{{food.sellCount}}份</span>
-          <span class="rating">好评率{{food.rating}}%</span>
-        </div>
-        <div class="price">
-          <span class="now">￥{{food.price}}</span><span v-show="food.oldPrice" class="old">￥{{food.oldPrice}}</span>
-        </div>
-        <div class="cartcontrol-wrapper">
-          <cartcontrol :food="food"></cartcontrol>
-        </div>
-        <div v-on:click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0" transition="fade">加入购物车</div>
-      </div>
-      <split v-show="food.info"></split>
-      <div class="info" v-show="food.info">
-        <h1 class="title">商品信息</h1>
-        <p class="text">{{food.info}}</p>
-      </div>
-      <split></split>
-      <div class="rating">
-        <h1 class="title">商品评价</h1>
-        <!--<ratingselect v-bind:select-type="selectType" v-bind:only-content="onlyContent" v-bind:desc="desc" v-bind:ratings="food.ratings"></ratingselect>-->
-        <div class="rating-wrapper">
-          <ul v-show="food.ratings && food.ratings.length">
-            <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="rating-item">
-              <div class="user">
-                <span class="name">{{rating.username}}</span>
-                <img class="avatar" width="12" height="12" :src="rating.avatar">
-              </div>
-              <div class="time">{{rating.rateTime | formatDate}}</div>
-              <p class="text">
-                <span  :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}">{{rating.text}}</span>
-              </p>
-            </li>
-          </ul>
-          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
-        </div>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -56,7 +62,7 @@
   import {formatDate} from 'common/js/date';
   import cartcontrol from 'components/seller/cartcontrol/cartcontrol';
   import split from 'components/split/split';
-  // import ratingselect from 'components/ratingselect/ratingselect';
+  import ratingselect from 'components/seller/ratingselect/ratingselect';
 
   const ALL = 2;
 
@@ -75,7 +81,8 @@
           all: '全部',
           positive: '推荐',
           negative: '吐槽'
-        }
+        },
+        eventHub: new Vue()
       };
     },
     methods: {
@@ -100,7 +107,7 @@
          if (!event._constructed) {
           return;
         }
-        this.$dispatch('cart.add', event.target);
+        this.$on('cart.add', event.target);
         Vue.set(this.food, 'count', 1);
       },
       needShow(type, text) {
@@ -114,19 +121,20 @@
         }
       }
     },
-    events: {
-        'ratingtype.select'(type) {
-          this.selectType = type;
-          this.$nextTick(() => {
-            this.scroll.refresh();
-          });
-        },
-        'content.toggle'(onlyContent) {
-          this.onlyContent = onlyContent;
-          this.$nextTick(() => {
-            this.scroll.refresh();
-          });
-        }
+    mounted() {
+      var self = this;
+      self.eventHub.$on('ratingtype.select', function(type) {
+        self.selectType = type;
+        self.$nextTick(() => {
+          self.scroll.refresh();
+        });
+      });
+      self.eventHub.$on('content.toggle', function(onlyContent) {
+        self.onlyContent = onlyContent;
+        self.$nextTick(() => {
+          self.scroll.refresh();
+        });
+      });
     },
     filters: {
       formatDate(time) {
@@ -136,8 +144,8 @@
     },
     components: {
       cartcontrol,
-      split
-      // ratingselect
+      split,
+      ratingselect
     }
   };
 </script>
@@ -153,10 +161,11 @@
     z-index: 30
     width: 100%
     background: #fff
-    &.move-transition
+    &.move-enter-active,&.mone-leave
       transition: all 0.2s linear
       transform: translate3d(0, 0, 0)
-    &.move-enter,&.move-leave
+    &.move-enter,&.move-leave-active
+      transition: all 0.2s linear
       transform: translate3d(100%, 0, 0)
     .image-header
       position: relative
@@ -225,10 +234,9 @@
         font-size: 10px
         color: #fff
         background: rgb(0, 160, 220)
-        &.fade-transition
+        &.fade-enter-active, &.fade-leave-active
           transition: all 0.2s
-          opacity: 1
-        &.fade-enter,&.fade-leave
+        &.fade-enter, &.fade-leave-active
           opacity: 0
     .info
       padding: 18px

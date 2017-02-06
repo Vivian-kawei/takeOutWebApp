@@ -1,5 +1,5 @@
 <template>
-  <div class="seller-header">
+  <div class="seller-header" v-if="seller">
     <div class="content-wrapper">
       <div class="avatar">
         <img v-bind:src="seller.avatar" >
@@ -88,6 +88,12 @@
     created() {
       console.log(13333, this.seller);
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    },
+    watch: {
+      seller() {
+         console.log(13334, this.seller);
+        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+      }
     },
     components: {
       star
