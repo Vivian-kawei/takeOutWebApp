@@ -1,5 +1,9 @@
 <template>
   <div class="seller-header" v-if="seller">
+    <div class="back">
+      <router-link :to="{path: '/home'}" class="icon-arrow_lift"></router-link>
+      <i class="icon-share">
+    </div>
     <div class="content-wrapper">
       <div class="avatar">
         <img v-bind:src="seller.avatar" >
@@ -109,12 +113,26 @@
     height: 135px
     color: #fff
     background: rgba(7, 17, 27, 0.5)
+    .back
+      font-size: 0
+      .icon-share
+        position: absolute
+        top: 10px
+        right: 10px
+        font-size: 20px
+        color: #fff
+      .icon-arrow_lift
+        position: absolute
+        top: 10px
+        left: 10px
+        font-size: 18px
+        color: #fff
     .content-wrapper
       width: 100%
       height: 100%
       .avatar
         position: absolute
-        top: 24px
+        top: 37px
         left: 24px
         img
           width: 64px
@@ -122,7 +140,7 @@
           border-radius: 2px
       .content
         position: absolute
-        top: 22px
+        top: 35px
         left: 104px
         right: 12px
         .title

@@ -11,6 +11,8 @@ import goods from 'components/seller/goods/goods';
 import ratings from 'components/seller/ratings/ratings';
 import sellerdsc from 'components/seller/sellers/sellerdsc';
 import seller from 'components/seller/seller';
+import collect from 'components/me/collect/collect';
+import address from 'components/me/address/address';
 
 import 'common/stylus/index.styl';
 
@@ -34,6 +36,8 @@ let router = new VueRouter({
         { path: 'sellerdsc', name: 'sellerdsc', component: sellerdsc }
       ]
     },
+    { path: '/collect', name: 'collect', component: collect },
+    { path: '/address', name: 'address', component: address },
     { path: '/*', name: 'default', component: home }
   ]
 });
