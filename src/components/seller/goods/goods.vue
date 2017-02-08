@@ -17,7 +17,7 @@
           <ul>
             <li v-on:click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
               <div class="icon">
-                <img width="57" hegith="57" v-bind:src="food.icon">
+                <img v-bind:src="food.icon">
               </div>
               <div class="content">
                 <h2 class="name">{{food.name}}</h2>
@@ -95,7 +95,9 @@
     },
     mounted() {
       var self = this;
-      self._initScroll();
+      setTimeout(function() {
+        self._initScroll();
+      }, 100);
       self._calculateHeight();
       self.eventHub.$on('cart.add', function(target) {
         self._drop(target);
@@ -230,6 +232,9 @@
         .icon
           flex: 0 0 57px
           margin-right: 10px
+          img
+            width: 57px
+            height: 57px
         .content
           flex: 1
           .name

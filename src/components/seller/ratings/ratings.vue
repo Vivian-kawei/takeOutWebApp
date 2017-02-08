@@ -36,7 +36,7 @@
             <h1 class="name">{{rating.username}}</h1>
             <div class="star-wrapper">
               <star :size="24" :score="rating.score"></star>
-              <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
+              <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟</span>
             </div>
             <p class="text">{{rating.text}}</p>
             <div class="recommend" v-show="rating.recommend && rating.recommend.length">
@@ -84,14 +84,15 @@
       }
     },
     created() {
-      this.$nextTick(() => {
-        this.scroll = new BScroll(this.$refs.ratings, {
-        click: true
+      let self = this;
+      setTimeout(function() {
+        self.scroll = new BScroll(self.$refs.ratings, {
+          click: true
         });
-      });
+      }, 100);
     },
     mounted() {
-      var self = this;
+      let self = this;
       self.eventHub.$on('ratingtype.select', function(type) {
         self.selectType = type;
         self.$nextTick(() => {

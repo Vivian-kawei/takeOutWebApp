@@ -109,9 +109,12 @@
       },
       _initScroll() {
         if (!this.scroll) {
-          this.scroll = new BScroll(this.$refs.sellerdsc, {
-            click: true
-          });
+          let self = this;
+          setTimeout(function() {
+            self.scroll = new BScroll(self.$refs.sellerdsc, {
+              click: true
+            });
+          }, 100);
         } else {
           this.scroll.refresh();
         }

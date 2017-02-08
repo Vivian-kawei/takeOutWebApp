@@ -128,7 +128,7 @@ export default{
     right: 0
     bottom: 0
     .swipe-warrper
-
+      font-size: 0
       .tool
         position: absolute
         top: 32px
@@ -180,7 +180,6 @@ export default{
       box-sizing: border-box
       width: 100%
       padding: 22px 14px
-      height: 108px
       .species-warrper
         flex: 1
         display: inline-block
@@ -192,7 +191,7 @@ export default{
         p
           padding-top: 10px
           font-size: 12px
-          line-height: 12x
+          line-height: 12px
 
     .seller-warrper
       .title
