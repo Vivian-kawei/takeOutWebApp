@@ -27,26 +27,8 @@
       <div class="title border-1px">全部商户</div>
         <div class="seller">
           <ul v-if="sellers">
-            <li class="seller-list border-1px" v-for="(seller, index) in sellers">
-              <router-link :to="{path: '/seller/' + seller.id + '/goods'}">
-                <div class="avatar">
-                  <img width="76" height="56" v-bind:src="seller.avatar">
-                </div>
-                <div class="seller-content">
-                  <div class="seller-name">
-                    <span class="name">{{seller.name}}</span>
-                  </div>
-                  <div class="sale">
-                    <star :size="24" :score="seller.score"></star>
-                    <span class="text">月售{{seller.sellCount}}单</span>
-                    <span class="time">{{seller.deliveryTime}}分钟</span>
-                  </div>
-                  <div class="dilivery">
-                    <span class="text">起送￥{{seller.minPrice}}</span>
-                    <span class="text">配送￥{{seller.deliveryPrice}}</span>
-                  </div>
-                </div>
-              </router-link>
+            <li class="seller-list border-1px" v-for="seller in sellers">
+              <v-sellerlist v-bind:seller="seller"></v-sellerlist>
             </li>
           </ul>
         </div>
@@ -63,6 +45,7 @@ import split from 'components/split/split';
 import swiper from 'components/home/swiper/swiper';
 import navigation from 'components/navigation/navigation';
 import star from 'components/star/star';
+import sellerlist from 'components/sellerlist/sellerlist';
 export default{
     props: {
       sellers: {
@@ -114,7 +97,8 @@ export default{
       split,
       'star': star,
       'v-swiper': swiper,
-      'v-navigation': navigation
+      'v-navigation': navigation,
+      'v-sellerlist': sellerlist
     }
 };
 </script>
@@ -205,54 +189,7 @@ export default{
         border-1px(rgba(7, 17, 27, 0.1))
       .seller
         padding-bottom: 50px
-        .seller-list
-          display: flex
-          box-sizing: border-box
-          padding: 20px 10px
-          font-size: 0
-          border-1px(rgba(7, 17, 27, 0.1))
-          a
-            width: 100%
-            height: 100%
-            display: block
-            .avatar
-              display: inline-block
-              width: 76px
-              height: 56px
-            .seller-content
-              display: inline-block
-              vertical-align: top
-              margin:0px 0 0 10px
-              .seller-name
-                .name
-                  font-size: 16px
-                  line-height: 24px
-                  font-weight: 700
-                  color: #333333
-              .sale
-                .star
-                  display: inline-block
-                  margin-right: 8px
-                  vertical-align: top
-                .text
-                  font-size: 10px
-                  line-height: 16px
-                .time
-                  display: inline-block
-                  position: absolute
-                  font-size: 10px
-                  line-height: 16px
-                  right: 10px
-              .dilivery
-                .text
-                  font-size: 10px
-                  line-height: 16px
-                  border-right: 1px solid rgba(7, 17, 27, 0.1)
-                  padding-right: 7px
-                  &:last-child
-                    border-right: 0
-                    padding-left: 7px
-
+        
 
 
 

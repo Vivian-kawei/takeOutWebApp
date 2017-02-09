@@ -1,15 +1,16 @@
 <template>
 <div>
-  <div v-show="showFlag" class="addAddress">
+  <div v-show="showFlag" class="changeAddress">
     <div class="header">
       <div class="warpper">
         <i class="icon-arrow_lift" v-on:click="hide"></i>
-        <div class="title">新增地址</div>
+        <div class="title">编辑地址</div>
       </div>
     </div>
-    <div class="addAddress-warrper">
+    <div class="changeAddress-warrper">
       <v-editorAddress></v-editorAddress>
       <button type="button" class="save">保存</button>
+      <button type="button" class="change">删除该地址</button>
     </div>
   </div>
 </div>
@@ -55,7 +56,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
 @import "../../../common/stylus/mixin";
-  .addAddress
+  .changeAddress
     background: white
     position: fixed
     top: 0
@@ -76,7 +77,7 @@
           text-align: center
         i
           float: left
-    .addAddress-warrper
+    .changeAddress-warrper
       padding: 16px 15px
       .save
         margin: 16px 0
@@ -87,6 +88,15 @@
         background: #ff2b4d
         border: 0
         border-radius: 5px
+      .change
+        width: 100%
+        height: 38px
+        text-align: center
+        color: #ff2b4d
+        background: #fff
+        border: 1px solid #ff2b4d
+        border-radius: 5px
+
 
     
 

@@ -3,7 +3,7 @@
   <div class="address">
     <div class="header">
       <div class="warpper">
-        <i class="icon-arrow_lift"></i>
+        <router-link :to="{path: '/me'}" class="icon-arrow_lift"></router-link>
         <div class="title">我的收货地址</div>
         <span v-on:click="addAddress">新增</span>
       </div>
@@ -17,26 +17,32 @@
             <span class="sex">女士</span>
             <span class="phone">12345678911</span>
           </div>
-          <i class="icon-keyboard_arrow_right"></i>
+          <i class="icon-keyboard_arrow_right" v-on:click="changeAddress"></i>
         </li>
       </ul>
     </div>
   </div>
   <v-addAddress ref="add"></v-addAddress>
+  <v-changeAddress ref="change"></v-changeAddress>
 </div>
 </template>
 
 <script>
 import addAddress from 'components/me/address/addAddress';
+import changeAddress from 'components/me/address/changeAddress';
 
 export default{
   methods: {
     addAddress(event) {
       this.$refs.add.show();
+    },
+    changeAddress(event) {
+      this.$refs.change.show();
     }
   },
   components: {
-      'v-addAddress': addAddress
+      'v-addAddress': addAddress,
+      'v-changeAddress': changeAddress
   }
 };
 </script>
@@ -58,8 +64,9 @@ export default{
           text-align: center
         span
           float: right
-        i
+        a
           float: left
+          color: #fff
     .address-list
       position: relative
       width: 100%
