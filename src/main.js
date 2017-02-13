@@ -13,6 +13,7 @@ import sellerdsc from 'components/seller/sellers/sellerdsc';
 import seller from 'components/seller/seller';
 import collect from 'components/me/collect/collect';
 import address from 'components/me/address/address';
+import login from 'components/user/login';
 
 import 'common/stylus/index.styl';
 
@@ -38,6 +39,7 @@ let router = new VueRouter({
     },
     { path: '/collect', name: 'collect', component: collect },
     { path: '/address', name: 'address', component: address },
+    { path: '/login', name: 'login', component: login },
     { path: '/*', name: 'default', component: home }
   ]
 });
