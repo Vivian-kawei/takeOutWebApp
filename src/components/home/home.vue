@@ -81,13 +81,13 @@ export default{
                 url: '#/home'
               },
               {
-                src: 'https://fuss10.elemecdn.com/6/1a/1e0f448be0624c62db416e864d2afjpeg.jpeg',
-                text: '日韩料理',
+                src: 'https://fuss10.elemecdn.com/4/34/ea0d51c9608310cf41faa5de6b8efjpeg.jpeg',
+                text: '蔬果新鲜',
                 url: '#/home'
               },
               {
-                src: 'https://fuss10.elemecdn.com/7/b6/235761e50d391445f021922b71789jpeg.jpeg',
-                text: '披萨意面',
+                src: 'https://fuss10.elemecdn.com/1/c6/8edcaeb8cd35845946db6673660fcjpeg.jpeg',
+                text: '商店超市',
                 url: '#/home'
               }
             ]
