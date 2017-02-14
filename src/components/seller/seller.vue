@@ -12,22 +12,27 @@
         <router-link :to="{path: '/seller/' + $route.params.id + '/sellerdsc'}">商家</router-link>
       </div>
     </div>
-    <router-view v-bind:seller="seller"></router-view>
+    <router-view v-bind:goods="goods" v-bind:seller="seller"></router-view>
   </div>
 </template>
 
 <script>
 import header from 'components/seller/header/header.vue';
 export default{
-  props: {
-    sellers: {
-      type: Object
-    }
+  data() {
+    return {
+        goods: {},
+        seller: {}
+    };
   },
-  computed: {
-    seller() {
-      return this.sellers && this.$route.params.id ? this.sellers[this.$route.params.id] : {};
-    }
+  mounted() {
+    let self = this;
+      self.$http.get('/goods/getSellerAndGoods?seller_id=' + self.$route.params.id).then((response) => {
+        console.log(response.data.goods);
+        self.goods = response.data.goods;
+        console.log(123456789, response.data.goods[0].seller_id);
+        self.seller = response.data.goods[0].seller_id;
+      });
   },
   components: {
     'v-header': header

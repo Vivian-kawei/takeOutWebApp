@@ -61,13 +61,10 @@
 
   const ALL = 2;
   export default {
-    props: {
-      seller: {
-        type: Object
-      }
-    },
+    props: ['seller'],
     data() {
       return {
+        ratings: [],
         selectType: ALL,
         onlyContent: true,
         desc: {
@@ -77,11 +74,6 @@
         },
         eventHub: new Vue()
       };
-    },
-    computed: {
-      ratings() {
-        return this.seller.ratings || [];
-      }
     },
     created() {
       let self = this;
@@ -105,9 +97,14 @@
           self.scroll.refresh();
         });
       });
+      self.$http.get('/ratings/getSellerRatings?seller_id=' + self.$route.params.id).then((response) => {
+        console.log(12345678909, response.data.ratings);
+        this.ratings = response.data.ratings;
+      });
     },
     methods: {
       needShow(type, text) {
+        console.log(type, text);
         if (this.onlyContent && !text) {
           return false;
         }

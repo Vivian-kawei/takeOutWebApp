@@ -52,11 +52,7 @@
   import food from 'components/seller/food/food';
 
   export default {
-    props: {
-      seller: {
-        type: Object
-      }
-    },
+    props: ['goods', 'seller'],
     data() {
       return {
         classMap: [],
@@ -67,10 +63,6 @@
       };
     },
     computed: {
-      goods() {
-        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-        return this.seller.goods || [];
-      },
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[ i ];
@@ -83,22 +75,34 @@
       },
       selectFoods() {
         let foods = [];
-        this.goods.forEach((good) => {
-          good.foods.forEach((food) => {
-            if (food.count) {
-              foods.push(food);
-            }
+        if (Array.isArray(this.goods) && this.goods.length > 0) {
+          this.goods.forEach((good) => {
+            good.foods.forEach((food) => {
+              if (food.count) {
+                foods.push(food);
+              }
+            });
           });
-        });
+        }
         return foods;
+      }
+    },
+    watch: {
+      goods() {
+        var self = this;
+        setTimeout(function() {
+          self._calculateHeight();
+          self._initScroll();
+        }, 100);
       }
     },
     mounted() {
       var self = this;
       setTimeout(function() {
+        self._calculateHeight();
         self._initScroll();
       }, 100);
-      self._calculateHeight();
+      self.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       self.eventHub.$on('cart.add', function(target) {
         self._drop(target);
       });

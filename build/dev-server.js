@@ -1,4 +1,5 @@
 require('./check-versions')()
+require('./Server/database');
 var config = require('../config')
 if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 var path = require('path')
@@ -6,6 +7,15 @@ var express = require('express')
 var webpack = require('webpack')
 var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
+
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var seller = require('./Server/routes/seller'); // seller路由
+var goods = require('./Server/routes/goods'); // goods路由
+var ratings = require('./Server/routes/ratings'); // ratings路由
+
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
@@ -17,6 +27,17 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // 网站标签
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.use('/seller', seller);
+app.use('/goods', goods);
+app.use('/ratings', ratings);
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

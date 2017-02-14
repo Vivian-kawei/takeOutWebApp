@@ -25,6 +25,7 @@ import register from 'components/user/register';
 export default{
   methods: {
     register(event) {
+      console.log(123);
       this.$refs.register.show();
     }
   },
@@ -58,8 +59,8 @@ export default{
         .title
           position: absolute
           top: 34px
-          left: 0
-          width: 100%
+          left: 45px
+          right: 45px
           display: inline-block
           font-weight: 700
           text-align: center

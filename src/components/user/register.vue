@@ -1,5 +1,5 @@
 <template>
-<div class="register">
+<div v-show="showFlag" class="register">
   <div class="registerHeader">
     <div class="warpper">
       <i class="icon-arrow_lift" v-on:click="hide"></i>
@@ -59,8 +59,8 @@
         .title
           position: absolute
           top: 34px
-          left: 0
-          width: 100%
+          left: 45px
+          right: 45px
           display: inline-block
           font-weight: 700
           text-align: center

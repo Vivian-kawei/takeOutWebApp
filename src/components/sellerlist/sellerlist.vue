@@ -1,6 +1,6 @@
 <template>
 <div class="sellerlist border-1px">
-  <router-link :to="{path: '/seller/' + seller.id + '/goods'}">
+  <router-link :to="{path: '/seller/' + seller._id + '/goods'}">
     <div class="avatar">
       <img width="100%" height="100%" v-bind:src="seller.avatar">
     </div>

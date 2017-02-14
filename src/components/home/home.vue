@@ -47,23 +47,22 @@ import navigation from 'components/navigation/navigation';
 import star from 'components/star/star';
 import sellerlist from 'components/sellerlist/sellerlist';
 export default{
-    props: {
-      sellers: {
-        type: Object
-      }
-    },
     mounted() {
       console.dir(this.$refs.home);
       let self = this;
-      setTimeout(function() {
-        console.dir(self.$refs.home);
-        self.scroll = new BScroll(self.$refs.home, {
-          click: true
-        });
-      }, 100);
+      self.$http.get('/seller/getAll').then((response) => {
+        console.log(response.data.sellers);
+        self.sellers = response.data.sellers;
+        setTimeout(function() {
+          self.scroll = new BScroll(self.$refs.home, {
+            click: true
+          });
+        }, 100);
+      });
     },
     data() {
         return {
+            sellers: {},
             species: [
               {
                 src: 'https://fuss10.elemecdn.com/b/7e/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg',
