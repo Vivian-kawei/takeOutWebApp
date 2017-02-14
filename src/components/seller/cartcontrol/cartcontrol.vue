@@ -24,7 +24,7 @@
         if (!event._constructed) {
           return;
         }
-        console.log('click');
+        console.log('click', event.target);
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {

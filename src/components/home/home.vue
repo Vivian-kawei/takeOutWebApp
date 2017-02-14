@@ -17,9 +17,11 @@
         </div>
       </div>
       <div class="species">
-        <div class="species-warrper" v-for="specie in species" :href="specie.url">
-          <img style="width: 44px;" :src="specie.src"></i>
-          <p v-text="specie.text"></p>
+        <div class="species-warrper" v-for="specie in species" >
+          <router-link :to="{path: '/variety/' + specie.type}">
+            <img style="width: 44px;" :src="specie.src"></i>
+            <p v-text="specie.text"></p>
+          </router-link>
         </div>
       </div>
       <split></split>
@@ -67,27 +69,27 @@ export default{
               {
                 src: 'https://fuss10.elemecdn.com/b/7e/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg',
                 text: '美食',
-                url: '#/home'
+                type: 0
               },
               {
                 src: 'https://fuss10.elemecdn.com/2/35/696aa5cf9820adada9b11a3d14bf5jpeg.jpeg',
                 text: '甜品饮品',
-                url: '#/home'
+                type: 5
               },
               {
                 src: 'https://fuss10.elemecdn.com/8/83/171fd98b85dee3b3f4243b7459b48jpeg.jpeg',
                 text: '鲜花蛋糕',
-                url: '#/home'
+                type: 6
               },
               {
                 src: 'https://fuss10.elemecdn.com/4/34/ea0d51c9608310cf41faa5de6b8efjpeg.jpeg',
                 text: '蔬果新鲜',
-                url: '#/home'
+                type: 7
               },
               {
                 src: 'https://fuss10.elemecdn.com/1/c6/8edcaeb8cd35845946db6673660fcjpeg.jpeg',
                 text: '商店超市',
-                url: '#/home'
+                type: 8
               }
             ]
         };

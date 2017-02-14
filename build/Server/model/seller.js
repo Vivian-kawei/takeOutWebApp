@@ -20,7 +20,8 @@ let sellerSchema = new mongoose.Schema({
     supports: [supportSchema],
     avatar: [String],
     pics: [String],
-    infos: String
+    infos: String,
+    sellerType: Number
 });
 
 mongoose.model('seller', sellerSchema);

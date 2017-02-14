@@ -87,15 +87,6 @@
         return foods;
       }
     },
-    watch: {
-      goods() {
-        var self = this;
-        setTimeout(function() {
-          self._calculateHeight();
-          self._initScroll();
-        }, 100);
-      }
-    },
     mounted() {
       var self = this;
       setTimeout(function() {

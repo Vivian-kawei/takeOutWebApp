@@ -14,7 +14,7 @@ import seller from 'components/seller/seller';
 import collect from 'components/me/collect/collect';
 import address from 'components/me/address/address';
 import login from 'components/user/login';
-
+import variety from 'components/home/variety/variety';
 import 'common/stylus/index.styl';
 
 // vue使用路由配置
@@ -40,6 +40,7 @@ let router = new VueRouter({
     { path: '/collect', name: 'collect', component: collect },
     { path: '/address', name: 'address', component: address },
     { path: '/login', name: 'login', component: login },
+    { path: '/variety/:type', name: 'variety', component: variety },
     { path: '/*', name: 'default', component: home }
   ]
 });

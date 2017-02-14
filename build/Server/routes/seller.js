@@ -22,4 +22,23 @@ router.all('/getAll', function(req, res) {
     });
 });
 
+//根据商家type查询seller的关联查询
+router.all('/getSellerByType', function(req, res) {
+    let sellerType = req.query.seller_type;
+    if (sellerType) {
+        Seller.find({sellerType}).exec((err,sellers) => {
+            console.log(err,sellers);
+            res.json({
+                status: 200,
+                sellers: sellers
+            });
+        })
+    } else {
+        res.json({
+            status: 404,
+            sellers: []
+        });
+    }
+});
+
 module.exports = router;
