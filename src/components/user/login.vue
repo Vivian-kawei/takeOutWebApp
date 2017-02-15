@@ -67,8 +67,6 @@ export default{
           color: #4d4d4d
         span
           float: right
-        a
-          float: left
     .loginContent
       width: 100%
       box-sizing: border-box

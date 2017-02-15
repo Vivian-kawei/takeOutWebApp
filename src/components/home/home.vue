@@ -42,13 +42,13 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll';
-import split from 'components/split/split';
-import swiper from 'components/home/swiper/swiper';
-import navigation from 'components/navigation/navigation';
-import star from 'components/star/star';
-import sellerlist from 'components/sellerlist/sellerlist';
-export default{
+  import BScroll from 'better-scroll';
+  import split from 'components/split/split';
+  import swiper from 'components/home/swiper/swiper';
+  import navigation from 'components/navigation/navigation';
+  import star from 'components/star/star';
+  import sellerlist from 'components/sellerlist/sellerlist';
+  export default{
     mounted() {
       console.dir(this.$refs.home);
       let self = this;
@@ -101,7 +101,7 @@ export default{
       'v-navigation': navigation,
       'v-sellerlist': sellerlist
     }
-};
+  };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

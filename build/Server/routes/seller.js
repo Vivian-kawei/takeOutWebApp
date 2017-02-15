@@ -41,4 +41,15 @@ router.all('/getSellerByType', function(req, res) {
     }
 });
 
+//根据多个商家type查询seller的关联查询
+router.all('/getSellerByTypes', function(req, res) {
+    Seller.find({sellerType: {$in: [1, 2, 3, 4]}}).exec((err,sellers) => {
+        console.log(err,sellers);
+        res.json({
+            status: 200,
+            sellers: sellers
+        });
+    })
+});
+
 module.exports = router;
