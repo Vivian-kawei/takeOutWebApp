@@ -4,7 +4,7 @@
     <div class="header">
       <div class="dse">
         <p class="username">用户名</p>
-        <i class="icon-set"></i>
+        <span class="exit" @click="exit">退出</span>
       </div>
       <div class="userimage">
       </div>
@@ -59,6 +59,17 @@ export default{
       ]
     };
   },
+  mounted() {
+    console.log(1234567, window.user);
+  },
+  methods: {
+    exit(event) {
+      let self = this;
+      self.$http.post('/auth/exit').then((response) => {
+        window.location.href = '/';
+      });
+    }
+  },
   components: {
       split,
       'v-navigation': navigation
@@ -82,9 +93,9 @@ export default{
           font-weight: 700
           color: #fff
           text-align: center
-        .icon-set
+        .exit
           position: absolute
-          font-size: 22px
+          font-size: 12px
           line-height: 80px
           top: 0
           right: 14px

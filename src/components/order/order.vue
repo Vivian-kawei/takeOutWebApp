@@ -29,7 +29,7 @@
           </div>
           <div class="buttom">
             <span>再来一单</span>
-            <span>评价</span>
+            <span v-on:click="AddRating">评价</span>
           </div>
           <split></split>
         </li>
@@ -37,16 +37,24 @@
     </div>
   </div>
   <v-navigation></v-navigation>
+  <v-addrating ref="add"></v-addrating>
 </div>
 </template>
 
 <script>
 import split from 'components/split/split';
 import navigation from 'components/navigation/navigation';
+import addrating from 'components/order/addrating';
 export default{
+  methods: {
+    AddRating(event) {
+      this.$refs.add.show();
+    }
+  },
   components: {
     split,
-    'v-navigation': navigation
+    'v-navigation': navigation,
+    'v-addrating': addrating
   }
 };
 </script>

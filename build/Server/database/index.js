@@ -52,3 +52,5 @@ process.on('SIGTERM', function() {
 require('../model/seller');
 require('../model/goods');
 require('../model/rating');
+require('../model/order');
+require('../model/user');

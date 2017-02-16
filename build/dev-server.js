@@ -12,9 +12,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 var seller = require('./Server/routes/seller'); // seller路由
 var goods = require('./Server/routes/goods'); // goods路由
 var ratings = require('./Server/routes/ratings'); // ratings路由
+var auth = require('./Server/routes/auth'); // ratings路由
 
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -33,10 +35,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'ljh',
+    cookie: {maxAge: 1000 * 60 * 60 },  //设置maxAge是1000 * 60 * 60 ms，即1小时后session和相应的cookie失效过期
+    resave: false,
+    saveUninitialized: true
+}));
 
 app.use('/seller', seller);
 app.use('/goods', goods);
 app.use('/ratings', ratings);
+app.use('/auth', auth);
 
 var compiler = webpack(webpackConfig)
 

@@ -7,13 +7,13 @@
       <span v-on:click="register">注册</span>
     </div>
   </div>
-  <div class="loginContent">
+  <div class="loginContent" @keydown.enter="_doLogin">
     <div class="loginWarpper">
-      <input class="username" placeholder="用户名">
+      <input class="username" type="text" placeholder="用户名" v-model.number="username">
       <i></i>
-      <input class="password" placeholder="密码">
+      <input class="password" type="password" placeholder="密码" v-model="password">
     </div>
-    <button type="button" class="loginButton">登录</button>
+    <button type="button" class="loginButton" @click="_doLogin">登录</button>
   </div>
   <v-register ref="register"></v-register>
 </div>
@@ -23,10 +23,38 @@
 import register from 'components/user/register';
 
 export default{
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
+  },
   methods: {
     register(event) {
       console.log(123);
       this.$refs.register.show();
+    },
+    _doLogin() {
+      var username = this.username;
+      var password = this.password;
+      if (username && password) {
+        console.log(username, /^1[3|4|5|8][0-9]\d{4,8}$/.test(username));
+        if (/^1[3|4|5|8][0-9]\d{4,8}$/.test(username)) {
+          console.log({username: username, password: password});
+          this.$http.post('/auth/doLogin', {username: username, password: password}).then(function(response) {
+            if (response.data.status === 200) {
+              console.log(response.data.result);
+              window.location.href = '/';
+            } else {
+              console.log(response.data.result);
+            }
+          });
+        } else {
+          console.log('请输入正确手机号');
+        }
+      } else {
+          console.log('填写信息不完整');
+      }
     }
   },
   components: {

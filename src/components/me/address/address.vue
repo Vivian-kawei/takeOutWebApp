@@ -2,7 +2,7 @@
 <div>
   <div class="address">
     <div class="header">
-      <div class="warpper">
+      <div class="wrapper">
         <router-link :to="{path: '/me'}" class="icon-arrow_lift"></router-link>
         <div class="title">我的收货地址</div>
         <span v-on:click="addAddress">新增</span>
@@ -53,7 +53,7 @@ export default{
     .header
       box-sizing: border-box 
       padding: 34px 15px 0 15px
-      .warpper
+      .wrapper
         width: 100%
         font-size: 14px
         line-height: 14px

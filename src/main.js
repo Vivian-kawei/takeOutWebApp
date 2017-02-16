@@ -15,6 +15,7 @@ import collect from 'components/me/collect/collect';
 import address from 'components/me/address/address';
 import login from 'components/user/login';
 import variety from 'components/home/variety/variety';
+import ajax from 'common/js/ajax';
 import 'common/stylus/index.styl';
 
 // vue使用路由配置
@@ -22,10 +23,27 @@ Vue.use(VueRouter);
 // vue-resource
 Vue.use(VueResource);
 
+function isLogin(to, from, next) {
+  console.log(to);
+  ajax.post('/auth/isLogin', '', function(data) {
+    data = JSON.parse(data);
+    console.log(data);
+    if (data.status === 200) {
+      console.log(data.result);
+      window.user = data.result;
+      next();
+    } else {
+      next({ path: '/login' });
+    }
+  }, function() {
+    console.log('请求异常');
+  });
+}
+
 let router = new VueRouter({
   routes: [
     { path: '/home', name: 'home', component: home },
-    { path: '/me', name: 'me', component: me },
+    { path: '/me', name: 'me', component: me, beforeEnter: isLogin },
     { path: '/order', name: 'order', component: order },
     {
       path: '/seller/:id',
@@ -41,7 +59,7 @@ let router = new VueRouter({
     { path: '/address', name: 'address', component: address },
     { path: '/login', name: 'login', component: login },
     { path: '/variety/:type', name: 'variety', component: variety },
-    { path: '/*', name: 'default', component: home }
+    { path: '/*', redirect: { name: 'home' } }
   ]
 });
 new Vue({
