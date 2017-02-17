@@ -10,39 +10,56 @@
     </div>
     <div class="address-warrper">
       <ul>
-        <li class="address-list border-1px">
-          <div class="des">广东省深圳市南山区留仙大道7098号A座544</div>
+        <li class="address-list border-1px" v-for="address in addresses" v-on:click="changeAddress(address)">
+          <div class="des">{{address.address}}</div>
           <div class="contact">
-            <span class="name">李</span>
-            <span class="sex">女士</span>
-            <span class="phone">12345678911</span>
+            <span class="name">{{address.name}}</span>
+            <span class="sex">{{address.sex}}</span>
+            <span class="phone">{{address.phone}}</span>
           </div>
-          <i class="icon-keyboard_arrow_right" v-on:click="changeAddress"></i>
+          <i class="icon-keyboard_arrow_right"></i>
         </li>
       </ul>
     </div>
   </div>
-  <v-addAddress ref="add"></v-addAddress>
-  <v-changeAddress ref="change"></v-changeAddress>
+  <v-editorAddress  v-bind:address="currentAdress" v-if="currentAdress"></v-editorAddress>
 </div>
 </template>
 
 <script>
-import addAddress from 'components/me/address/addAddress';
-import changeAddress from 'components/me/address/changeAddress';
+import editorAddress from 'components/me/address/editorAddress';
 
 export default{
+  data() {
+    return {
+      addresses: [],
+      currentAdress: null
+    };
+  },
+  mounted() {
+    this.refresh();
+  },
   methods: {
-    addAddress(event) {
-      this.$refs.add.show();
+    addAddress() {
+      this.currentAdress = {};
     },
-    changeAddress(event) {
-      this.$refs.change.show();
+    changeAddress(address) {
+      this.currentAdress = address;
+      console.log('address', this.currentAdress);
+    },
+    refresh() {
+      console.log(1234567, window.user);
+      let self = this;
+      let userid = window.user._id;
+      self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
+        console.log(1234567890, response);
+        self.addresses = response.data.address;
+        console.log(1234567890, self.addresses);
+      });
     }
   },
   components: {
-      'v-addAddress': addAddress,
-      'v-changeAddress': changeAddress
+      'v-editorAddress': editorAddress
   }
 };
 </script>

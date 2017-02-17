@@ -44,7 +44,7 @@ let router = new VueRouter({
   routes: [
     { path: '/home', name: 'home', component: home },
     { path: '/me', name: 'me', component: me, beforeEnter: isLogin },
-    { path: '/order', name: 'order', component: order },
+    { path: '/order', name: 'order', component: order, beforeEnter: isLogin },
     {
       path: '/seller/:id',
       name: 'seller',
@@ -55,8 +55,8 @@ let router = new VueRouter({
         { path: 'sellerdsc', name: 'sellerdsc', component: sellerdsc }
       ]
     },
-    { path: '/collect', name: 'collect', component: collect },
-    { path: '/address', name: 'address', component: address },
+    { path: '/collect', name: 'collect', component: collect, beforeEnter: isLogin },
+    { path: '/address', name: 'address', component: address, beforeEnter: isLogin },
     { path: '/login', name: 'login', component: login },
     { path: '/variety/:type', name: 'variety', component: variety },
     { path: '/*', redirect: { name: 'home' } }

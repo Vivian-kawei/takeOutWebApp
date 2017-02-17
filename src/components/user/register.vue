@@ -45,7 +45,7 @@
                 this.$http.post('/auth/doRegister', {username: username, password: password}).then(function(response) {
                   if (response.data.staus === 200) {
                     console.log(response.data.result);
-                    window.location.href = '#/login';
+                    this.hide();
                   } else {
                     console.log(response.data.result);
                   }

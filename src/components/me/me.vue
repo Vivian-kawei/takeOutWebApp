@@ -27,7 +27,7 @@
       <split></split>
       <div class="service-warrper">
         <div class="service" v-for="service in services">
-          <router-link :to="{path: '/address'}" :class="service.iconClass"></router-link>
+          <router-link :to="{path: service.href}" :class="service.iconClass"></router-link>
           <p v-text="service.text"></p>
         </div>
       </div>
@@ -46,15 +46,18 @@ export default{
       services: [
         {
           iconClass: 'icon-address',
-          text: '我的地址'
+          text: '我的地址',
+          href: '/address'
         },
         {
           iconClass: 'icon-Message',
-          text: '我的评价'
+          text: '我的评价',
+          href: '/me'
         },
         {
           iconClass: 'icon-service',
-          text: '在线客服'
+          text: '在线客服',
+          href: '/me'
         }
       ]
     };

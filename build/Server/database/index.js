@@ -54,3 +54,6 @@ require('../model/goods');
 require('../model/rating');
 require('../model/order');
 require('../model/user');
+require('../model/address');
+require('../model/order');
+require('../model/collect');

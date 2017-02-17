@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
 
+let foodSchema = new mongoose.Schema({
+    name       : String,
+    count      : Number,
+    price      : Number
+});
+
 let orderSchema = new mongoose.Schema({
     seller_id      : {type: mongoose.Schema.Types.ObjectId, ref: 'seller'},
     user_id        : {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     orderTime      : Number,
-    food_name      : String
+    foods          : [foodSchema],
+    sumPrice       : Number,
+    address        : String
 });
 
 mongoose.model('order', orderSchema);

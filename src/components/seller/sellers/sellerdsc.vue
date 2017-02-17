@@ -70,7 +70,7 @@
 
 <script >
   import BScroll from 'better-scroll';
-  import {saveToLocal, loadFromLocal} from 'common/js/store';
+  // import {saveToLocal, loadFromLocal} from 'common/js/store';
   import star from 'components/star/star';
   import split from 'components/split/split';
 
@@ -82,9 +82,7 @@
     },
     data() {
       return {
-        favorite: (() => {
-          return loadFromLocal(this.seller.id, 'favorite', false);
-        })()
+        'favorite': false
       };
     },
     computed: {
@@ -98,6 +96,15 @@
     mounted() {
       this._initScroll();
       this._initPics();
+      let self = this;
+      let sellerid = self.seller._id;
+      self.$http.post('/collect/getSellerIsCollectByUserIDAndSellerID', {sellerid: sellerid}).then(function(response) {
+        console.log(33333000002, response);
+        if (response.data.status === 200) {
+          this.favorite = !this.favorite;
+        }
+        console.log(33333300003, self.collects);
+      });
     },
     methods: {
       toggleFavorite(event) {
@@ -105,7 +112,16 @@
           return;
         }
         this.favorite = !this.favorite;
-        saveToLocal(this.seller.id, 'favorite', this.favorite);
+        // saveToLocal(this.seller.id, 'favorite', this.favorite);
+        let self = this;
+        let sellerid = self.seller._id;
+        self.$http.post('/collect/setUserCollect', {sellerid: sellerid}).then(function(response) {
+          if (response.data.status === 500) {
+            console.log('请先登录');
+            window.location.href = '#/login';
+          }
+          console.log(3000006, sellerid);
+        });
       },
       _initScroll() {
         if (!this.scroll) {

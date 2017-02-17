@@ -52,4 +52,15 @@ router.all('/getSellerByTypes', function(req, res) {
     })
 });
 
+//根据多个商家id查询seller的关联查询
+router.post('/getSellerByID', function(req, res) {
+    Seller.find({sellerid: sellerid}).exec((err,sellers) => {
+        console.log(err,sellers);
+        res.json({
+            status: 200,
+            seller: seller
+        });
+    })
+});
+
 module.exports = router;

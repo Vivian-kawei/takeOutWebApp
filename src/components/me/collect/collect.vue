@@ -2,12 +2,12 @@
   <div class="collect">
     <div class="header">
       <div class="warpper">
-        <i class="icon-arrow_lift"></i>
+        <router-link class="icon-arrow_lift" :to="{path: '/me'}">
         <div class="title">我的收藏</div>
       </div>
     </div>
-    <div class="collect-content">
-      <v-sellerlist></v-sellerlist>
+    <div class="collect-content" v-for="collect in collects">
+      <v-sellerlist v-bind:seller="collect.seller_id"></v-sellerlist>
     </div>
   </div>
 </template>
@@ -15,6 +15,20 @@
 <script>
 import sellerlist from 'components/sellerlist/sellerlist';
 export default{
+  data() {
+    return {
+      collects: []
+    };
+  },
+  mounted() {
+    let self = this;
+    let userid = window.user._id;
+    self.$http.post('/collect/getUserCollectByUserID', {userid: userid}).then(function(response) {
+      console.log(33333000002, response);
+      self.collects = response.data.collect;
+      console.log(33333300003, self.collects);
+    });
+  },
   components: {
       'v-sellerlist': sellerlist
   }
@@ -32,13 +46,19 @@ export default{
         line-height: 14px
         color: #fff
         .title
+          position: absolute
+          top: 34px
+          left: 45px
+          right: 45px
           display: inline-block
           font-weight: 700
           text-align: center
+          color: #fff
         span
           float: right
-        i
+        a
           float: left
+          color: #fff
 
 
 

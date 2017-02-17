@@ -7,7 +7,7 @@
         <div class="tool">
           <div class="address">
             <span>送至：</span>
-            <span class="adde">深圳职业技术学院北校区A座</span>
+            <span class="adde">{{location}}</span>
             <i class="icon-drop_down"></i>
           </div>
           <div class="search">
@@ -61,10 +61,34 @@
           });
         }, 100);
       });
+      this.getCityPosition();
+    },
+    methods: {
+      getCityPosition() {
+        var self = this;
+        /* eslint-disable no-undef */
+        var geolocation = new BMap.Geolocation();
+        /* eslint-disable no-undef */
+        var gc = new BMap.Geocoder();
+        geolocation.getCurrentPosition(function(r) {
+          /* eslint-disable no-undef */
+          if (this.getStatus() === BMAP_STATUS_SUCCESS) {
+            var pt = r.point;
+            gc.getLocation(pt, function(rs) {
+              var addComp = rs.addressComponents;
+              self.location = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+              console.log('定位成功:', addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+            });
+          } else {
+              console.log('定位错误码:', this.getStatus());
+          }
+        }, {enableHighAccuracy: true});
+      }
     },
     data() {
         return {
             sellers: {},
+            location: '',
             species: [
               {
                 src: 'https://fuss10.elemecdn.com/b/7e/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg',

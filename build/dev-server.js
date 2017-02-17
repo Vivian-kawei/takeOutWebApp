@@ -16,7 +16,10 @@ var session = require('express-session')
 var seller = require('./Server/routes/seller'); // seller路由
 var goods = require('./Server/routes/goods'); // goods路由
 var ratings = require('./Server/routes/ratings'); // ratings路由
-var auth = require('./Server/routes/auth'); // ratings路由
+var auth = require('./Server/routes/auth'); // autn路由
+var address = require('./Server/routes/address'); // address路由
+var order = require('./Server/routes/order'); // order路由
+var collect = require('./Server/routes/collect'); // collect路由
 
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -46,6 +49,9 @@ app.use('/seller', seller);
 app.use('/goods', goods);
 app.use('/ratings', ratings);
 app.use('/auth', auth);
+app.use('/address', address);
+app.use('/order', order);
+app.use('/collect', collect);
 
 var compiler = webpack(webpackConfig)
 
