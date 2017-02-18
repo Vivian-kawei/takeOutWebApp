@@ -111,17 +111,28 @@
         if (!event._constructed) {
           return;
         }
-        this.favorite = !this.favorite;
-        // saveToLocal(this.seller.id, 'favorite', this.favorite);
-        let self = this;
-        let sellerid = self.seller._id;
-        self.$http.post('/collect/setUserCollect', {sellerid: sellerid}).then(function(response) {
-          if (response.data.status === 500) {
-            console.log('请先登录');
-            window.location.href = '#/login';
-          }
-          console.log(3000006, sellerid);
-        });
+        if (!this.favorite) {
+          this.favorite = !this.favorite;
+          let self = this;
+          let sellerid = self.seller._id;
+          self.$http.post('/collect/setUserCollect', {sellerid: sellerid}).then(function(response) {
+            if (response.data.status === 500) {
+              console.log('请先登录');
+              window.location.href = '#/login';
+            }
+            console.log(3000006, sellerid);
+          });
+        } else {
+          this.favorite = !this.favorite;
+          let self = this;
+          let sellerid = self.seller._id;
+          self.$http.post('/collect/removeCollectByUserIDAndSellerID', {sellerid: sellerid}).then(function(response) {
+            if (response.data.status === 500) {
+              console.log('请先登录');
+              window.location.href = '#/login';
+            }
+          });
+        }
       },
       _initScroll() {
         if (!this.scroll) {

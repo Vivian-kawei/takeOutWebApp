@@ -38,7 +38,7 @@
         </li>
       </ul>
     </div>
-    <shopcart ref="shopcart" v-bind:select-foods="selectFoods" v-bind:delivery-price="seller.deliveryPrice" v-bind:min-price="seller.minPrice"></shopcart>
+    <shopcart ref="shopcart" v-bind:select-foods="selectFoods" v-bind:delivery-price="seller.deliveryPrice" v-bind:min-price="seller.minPrice" v-bind:seller="seller"></shopcart>
   </div>
   <food v-bind:food="selectedFood" ref="food"></food>
 </div>

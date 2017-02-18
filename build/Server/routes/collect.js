@@ -91,4 +91,30 @@ router.post('/getSellerIsCollectByUserIDAndSellerID', function(req, res) {
     }
 });
 
+//根据用户ID和商家ID删除当前的商家收藏
+router.post('/removeCollectByUserIDAndSellerID', function(req, res) {
+    let user = req.session.user;
+    let sellerid = req.body.sellerid;
+    if (user) { 
+        let userid = user._id;
+        Collect.remove({user_id: userid, seller_id: sellerid}).exec((err,collect) => {
+            if (err) {
+                res.json({
+                    status: 404,
+                    collect: []
+                });
+            } else {
+                res.json({
+                    status: 200,
+                    collect: []
+                });
+            }
+        })
+    } else {
+        res.json({
+            status: 500,
+            result: '未登录'
+        })
+    }
+});
 module.exports = router;

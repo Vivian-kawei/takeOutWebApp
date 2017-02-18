@@ -2,7 +2,7 @@
 <div class="login">
   <div class="loginHeader">
     <div class="warpper">
-      <i class="icon-arrow_lift"></i>
+      <router-link class="icon-arrow_lift" :to="{path: '/home'}">
       <div class="title">登录</div>
       <span v-on:click="register">注册</span>
     </div>
@@ -95,6 +95,8 @@ export default{
           color: #4d4d4d
         span
           float: right
+        a
+          color: #ff2b4d
     .loginContent
       width: 100%
       box-sizing: border-box

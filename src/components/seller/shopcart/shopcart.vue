@@ -12,7 +12,7 @@
         <div class="price" v-bind:class="{'hightlight':totalPrice>0}">￥{{totalPrice}}</div>
         <div class="desc" @click="dropBeforeEnter">另需配送费￥{{deliveryPrice}}</div>
       </div>
-      <div class="content-right" v-on:click.stop.prevent="pay">
+      <div class="content-right" v-on:click.stop.prevent="pay(currentFoods)">
         <div class="pay" :class="payClass">{{payDesc}}</div>
       </div>
     </div>
@@ -48,12 +48,14 @@
   <transition name="fade">
     <div class="list-mask" v-on:click="hideList" v-show="listShow">
   </transition>
+  <v-addorder v-if="currentFoods" v-bind:currentFoods="currentFoods" v-bind:seller="seller"></v-addorder>
   </div>
 </div>
 </template>
 
 <script>
 import cartcontrol from 'components/seller/cartcontrol/cartcontrol';
+import addorder from 'components/order/addorder';
 import BScroll from 'better-scroll';
 
   export default {
@@ -71,7 +73,8 @@ import BScroll from 'better-scroll';
       minPrice: {
         type: Number,
         default: 0
-      }
+      },
+      seller: {}
     },
     data() {
       return {
@@ -94,7 +97,8 @@ import BScroll from 'better-scroll';
         ],
         dropBalls: [
         ],
-        fold: true
+        fold: true,
+        currentFoods: null
       };
     },
     computed: {
@@ -175,11 +179,12 @@ import BScroll from 'better-scroll';
       hideList() {
         this.fold = true;
       },
-      pay() {
+      pay(currentFoods) {
         if (this.totalPrice < this.minPrice) {
           return;
         }
-        window.alert(`支付${this.totalPrice}元`);
+        // window.alert(`支付${this.totalPrice + this.deliveryPrice}元`);
+        this.currentFoods = this.selectFoods;
       },
       dropBeforeEnter(el) {
         console.log(2331, el);
@@ -221,7 +226,8 @@ import BScroll from 'better-scroll';
       }
     },
     components: {
-      cartcontrol
+      cartcontrol,
+      'v-addorder': addorder
     }
   };
 </script>

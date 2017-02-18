@@ -12,7 +12,7 @@
         <router-link :to="{path: '/seller/' + $route.params.id + '/sellerdsc'}">商家</router-link>
       </div>
     </div>
-    <router-view v-bind:goods="goods" v-bind:seller="seller"></router-view>
+    <router-view v-bind:goods="goods" v-bind:seller="seller" keep-alive></router-view>
   </div>
 </template>
 

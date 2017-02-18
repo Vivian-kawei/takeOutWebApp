@@ -14,8 +14,10 @@
                 <img width="30" height="30" :src="order.seller_id.avatar">
               </div>
               <div class="seller">
-                <span class="name">{{order.seller_id.name}}</span>
-                <i class="icon-keyboard_arrow_right"></i>
+                <router-link :to="{path: '/seller/' + order.seller_id._id + '/goods'}">
+                  <span class="name">{{order.seller_id.name}}</span>
+                  <i class="icon-keyboard_arrow_right"></i>
+                </router-link>
               </div>
             </div>
             <div class="order-content">
