@@ -9,7 +9,7 @@
           </div>
           <div class="num" v-show="totalCount>0">{{totalCount}}</div>
         </div>
-        <div class="price" v-bind:class="{'hightlight':totalPrice>0}">￥{{totalPrice}}</div>
+        <div class="price" v-bind:class="{'hightlight':totalPrice>0}">￥{{totalPrice.toFixed(2)}}</div>
         <div class="desc" @click="dropBeforeEnter">另需配送费￥{{deliveryPrice}}</div>
       </div>
       <div class="content-right" v-on:click.stop.prevent="pay(currentFoods)">
@@ -48,7 +48,7 @@
   <transition name="fade">
     <div class="list-mask" v-on:click="hideList" v-show="listShow">
   </transition>
-  <v-addorder v-if="currentFoods" v-bind:currentFoods="currentFoods" v-bind:seller="seller"></v-addorder>
+  <v-addorder v-if="currentFoods" v-bind:currentFoods="currentFoods" v-bind:seller="seller" v-bind:totalPrice="this.totalPrice" v-bind:deliveryPrice="deliveryPrice"></v-addorder>
   </div>
 </div>
 </template>
@@ -185,6 +185,7 @@ import BScroll from 'better-scroll';
         }
         // window.alert(`支付${this.totalPrice + this.deliveryPrice}元`);
         this.currentFoods = this.selectFoods;
+        console.log(123456675555555, this.seller);
       },
       dropBeforeEnter(el) {
         console.log(2331, el);

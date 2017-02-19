@@ -6,73 +6,131 @@
       <div class="title">提交订单</div>
     </div>
   </div>
-  <div class="addorder-content">
-    <div class="addorder-group">
-      <div class="addorder-item">
-        <i class="icon-left icon-address"></i>
-        <div class="addorder-wrapper">
-          <div class="addorder-title">深圳市南山区深圳职业技术学院北校区A523</div>
-          <div class="addorder-description">
-            <span>李</span>
-            <span>女士</span> 
-            <span>13760173057</span>
+  <div class="addorder-content" ref="addroder">
+    <div class="addorderCcontent-wrapper">
+      <div class="addorder-group">
+        <div class="addorder-item">
+          <i class="icon-left icon-address"></i>
+          <div class="addorder-wrapper" v-on:click="selectaddress">
+            <div class="useraddress" v-if="userAddress">
+              <div class="addorder-title">{{userAddress.address}}</div>
+              <div class="addorder-description">
+                <span>{{userAddress.name}}</span>
+                <span>{{userAddress.sex}}</span>
+                <span>{{userAddress.phone}}</span>
+              </div>
+            </div>
+            <div class="addorder-title" v-if="!userAddress">
+              <span>请添加地址</span>
+            </div>
           </div>
+          <i class="icon-right icon-keyboard_arrow_right"></i>
         </div>
-        <i class="icon-right icon-keyboard_arrow_right"></i>
-      </div>
-      <div class="addorder-item">
-        <i class="icon-left icon-shopping_cart"></i>
-        <div class="addorder-wrapper">
-          <div class="addorder-text">商家配送</div>
-        </div>
-        <i class="icon-right icon-keyboard_arrow_right"></i>
-      </div>
-      <div class="addorder-item">
-        <i class="icon-left icon-order"></i>
-        <div class="addorder-wrapper">
-          <div class="addorder-text">现金支付</div>
-        </div>
-        <i class="icon-right icon-keyboard_arrow_right"></i>
-      </div>
-    </div>
-    <div class="orderdsc">
-      <div class="orderdsc-item">
-        <i class="icon-left icon-home"></i>
-        <div class="orderdsc-wrapper">
-          <div class="orderdsc-title">店名</div>
-          <div class="orderdsc-description">
-            <ul>
-              <li>
-                <div class="foods">
-                  <span class="foodname">foodname</span>
-                  <span class="number">X2</span> 
-                  <span class="price">￥20</span>
-                </div>
-              </li>
-            </ul>
+        <div class="addorder-item">
+          <i class="icon-left icon-shopping_cart"></i>
+          <div class="addorder-wrapper">
+            <div class="addorder-text">商家配送</div>
           </div>
-          <div class="orderPay">共需支付￥30元</div>
+          <i class="icon-right icon-keyboard_arrow_right"></i>
+        </div>
+        <div class="addorder-item">
+          <i class="icon-left icon-order"></i>
+          <div class="addorder-wrapper">
+            <div class="addorder-text">现金支付</div>
+          </div>
+          <i class="icon-right icon-keyboard_arrow_right"></i>
+        </div>
+      </div>
+      <div class="orderdsc">
+        <div class="orderdsc-item">
+          <i class="icon-left icon-home"></i>
+          <div class="orderdsc-wrapper">
+            <div class="orderdsc-title">{{seller.name}}</div>
+            <div class="orderdsc-description">
+              <div class="foodlist">
+                <ul v-for="food in currentFoods">
+                  <li>
+                    <div class="foods">
+                      <span class="foodname">{{food.name}}</span>
+                      <span class="number">X{{food.count}}</span>
+                      <span class="price">￥{{(food.price*food.count).toFixed(2)}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="delivery">
+                <span class="deliveryname">配送费</span>
+                <span class="deliveryprice">￥{{seller.deliveryPrice}}元</span>
+              </div>
+              <div class="orderPay">共需支付￥{{(totalPrice + deliveryPrice).toFixed(2)}}元</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="confirm">
+    <div class="text">确认订单</div>
+  </div>
+  <v-selectAddress ref="selectaddress"></v-selectAddress>
 </div>
 </template>
-
 <script>
-export default{
-  dprops: {
-    currentFoods: {
-      type: Array
+  import BScroll from 'better-scroll';
+  import selectAddress from 'components/order/selectAddress';
+  export default{
+    props: {
+      currentFoods: {
+        type: Array,
+        default: 0
       },
-    seller: {}
-  },
-  methods: {
-    hide() {
-      this.$parent.currentFoods = null;
+      totalPrice: {
+        type: Number,
+        default: 0
+      },
+      deliveryPrice: {
+        type: Number,
+        default: 0
+      },
+      seller: {}
+    },
+    data() {
+      return {
+        addresses: {
+          type: Object
+        },
+        userAddress: null
+      };
+    },
+    mounted() {
+      console.log('currentFoods', window.user._id);
+      let self = this;
+      let userid = window.user._id;
+      self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
+        console.log(1234567890, response);
+        self.addresses = response.data.address;
+        console.log(1234567890, self.addresses);
+        if (self.addresses) {
+          self.userAddress = self.addresses[0];
+          console.log('userAddress1', self.userAddress);
+        }
+        self.scroll = new BScroll(self.$refs.addroder, {
+          click: true
+        });
+      }, 100);
+    },
+    methods: {
+      hide() {
+        this.$parent.currentFoods = null;
+      },
+      selectaddress() {
+        this.$refs.selectaddress.show();
+      }
+    },
+    components: {
+      'v-selectAddress': selectAddress
     }
-  }
-};
+  };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -87,10 +145,11 @@ export default{
     font-size: 0
     z-index: 10000
     .addorder-header
-      box-sizing: border-box 
+      box-sizing: border-box
       padding: 34px 15px 0 15px
       width: 100%
       height: 70px
+      background: #f5f5f5
       .header-wrapper
         width: 100%
         font-size: 18px
@@ -107,6 +166,9 @@ export default{
         i
           color: #636363
     .addorder-content
+      position: absolute
+      top: 70px
+      bottom: 50px
       width: 100%
       box-sizing: border-box
       padding: 0 10px 20px 10px
@@ -176,19 +238,49 @@ export default{
               line-height: 28px
               font-size: 14px
               color: #999
-            .foods
-              padding-right: 10px
-              display: flex
-              .foodname
-                flex: 1
-              .number, .price
-                flex: 0 0 50px
-                text-align: center
-            .orderPay
-              font-size: 20px
+              .foodlist
+                border-bottom: 1px dashed #ccc
+                .foods
+                  padding-right: 10px
+                  display: flex
+                  .foodname
+                    flex: 1
+                  .number, .price
+                    flex: 0 0 50px
+                    text-align: center
+              .delivery
+                display: flex
+                border-bottom: 1px dashed #ccc
+                padding: 10px 10px 10px 0
+                .deliveryname
+                  flex: 1
+                .deliveryprice
+                  flex: 0 0 50px
+                  text-align: center
+              .orderPay
+                padding: 10px
+                font-size: 14px
+                text-align: right
+                color: #333
+    .confirm
+      position: fixed
+      left: 0
+      bottom: 0
+      width: 100%
+      height: 50px
+      background: #fff
+      .text
+        width: 132px
+        height: 100%
+        float: right
+        font-size: 14px
+        font-weight: 700
+        line-height: 50px
+        text-align: center
+        background: #ff2d4b
+        color: #fff
 
 
-            
 
 
 

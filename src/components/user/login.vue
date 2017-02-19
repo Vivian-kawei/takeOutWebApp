@@ -2,7 +2,7 @@
 <div class="login">
   <div class="loginHeader">
     <div class="warpper">
-      <router-link class="icon-arrow_lift" :to="{path: '/home'}">
+      <router-link class="icon-arrow_lift" :to="{path: '/home'}"></router-link>
       <div class="title">登录</div>
       <span v-on:click="register">注册</span>
     </div>
@@ -73,7 +73,7 @@ export default{
     height: 100%
     font-size: 0
     .loginHeader
-      box-sizing: border-box 
+      box-sizing: border-box
       padding: 34px 15px 0 15px
       width: 100%
       height: 75px
@@ -87,8 +87,8 @@ export default{
         .title
           position: absolute
           top: 34px
-          left: 45px
-          right: 45px
+          left: 60px
+          right: 60px
           display: inline-block
           font-weight: 700
           text-align: center
@@ -104,7 +104,7 @@ export default{
       .loginWarpper
         border-radius: 12px
         border: 1px solid rgba(7, 17, 27, 0.1)
-        input 
+        input
           display: block
           box-sizing: border-box
           padding: 20px
