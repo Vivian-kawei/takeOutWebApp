@@ -18,6 +18,7 @@
 
 <script>
 import header from 'components/seller/header/header.vue';
+import Vue from 'vue';
 export default{
   data() {
     return {
@@ -32,6 +33,21 @@ export default{
         self.goods = response.data.goods;
         console.log(123456789, response.data.goods[0].seller_id);
         self.seller = response.data.goods[0].seller_id;
+        /* eslint-disable no-undef */
+        let localShopCartData = localStorage.getItem(self.seller._id);
+        localShopCartData = JSON.parse(localShopCartData);
+        if (Array.isArray(localShopCartData) && localShopCartData.length > 0) {
+          response.data.goods.forEach(goods => {
+            goods.foods.forEach(food => {
+              localShopCartData.forEach(localfood => {
+                if (localfood._id === food._id) {
+                  Vue.set(food, 'count', localfood.count);
+                }
+              });
+            });
+          });
+          console.log('localShopCartData', localShopCartData);
+        }
       });
   },
   components: {

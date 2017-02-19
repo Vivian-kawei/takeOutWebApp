@@ -83,6 +83,8 @@
               }
             });
           });
+          /* eslint-disable no-undef */
+          localStorage.setItem(this.$route.params.id, JSON.stringify(foods));
         }
         return foods;
       }
