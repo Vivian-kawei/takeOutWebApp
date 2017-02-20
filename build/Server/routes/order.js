@@ -23,4 +23,21 @@ router.post('/getUserOrderAndSeller', function(req, res) {
     }
 });
 
+//新增订单
+router.post('/addOrder', function(req, res) {
+    let order = req.body.order;
+    Order.create(order,function (err, result) {
+        if (err) {
+            res.json({
+                status: 404,
+                error: []
+            });
+        } else {
+            res.json({
+                status: 200,
+                order: order
+            });
+        }
+    });
+});
 module.exports = router;

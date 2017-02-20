@@ -16,7 +16,7 @@
           <span>代金券</span>
         </div>
         <div class="dse-content">
-          <span class="number">2</span>
+          <span class="number">{{count}}</span>
           <router-link :to="{path: '/collect'}" class="collect">收藏的店</router-link>
         </div>
         <div class="dse-content">
@@ -59,11 +59,24 @@ export default{
           text: '在线客服',
           href: '/me'
         }
-      ]
+      ],
+      count: {
+        type: Number
+      },
+      collects: []
     };
   },
   mounted() {
     console.log(1234567, window.user);
+    let userid = window.user._id;
+    let self = this;
+    self.$http.post('/collect/getUserCollectByUserID', {userid: userid}).then(function(response) {
+      console.log(33333000002, response);
+      self.collects = response.data.collect;
+      console.log(33333300003, self.collects);
+      self.count = self.collects.length;
+      console.log(33333300004, self.count);
+    });
   },
   methods: {
     exit(event) {

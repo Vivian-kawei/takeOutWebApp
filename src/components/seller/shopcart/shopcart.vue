@@ -183,9 +183,16 @@ import BScroll from 'better-scroll';
         if (this.totalPrice < this.minPrice) {
           return;
         }
-        // window.alert(`支付${this.totalPrice + this.deliveryPrice}元`);
-        this.currentFoods = this.selectFoods;
-        console.log(123456675555555, this.seller);
+        let self = this;
+        window.isLogin(function(result) {
+          if (result) {
+            // window.alert(`支付${this.totalPrice + this.deliveryPrice}元`);
+            self.currentFoods = self.selectFoods;
+            console.log(123456675555555, self.seller);
+          } else {
+            window.location.href = '#/login';
+          }
+        });
       },
       dropBeforeEnter(el) {
         console.log(2331, el);

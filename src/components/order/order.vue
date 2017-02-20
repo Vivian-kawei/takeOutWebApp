@@ -6,7 +6,7 @@
     </div>
     <split></split>
     <div class="order-wrapper" ref="order">
-      <div class="detalis">
+      <div class="detalis" v-if="orders.length > 0">
         <ul v-for="order in orders">
           <li class="order-list">
             <div class="title">
@@ -32,16 +32,17 @@
             </div>
             <div class="buttom">
               <span>再来一单</span>
-              <span v-on:click="AddRating">评价</span>
+              <span v-on:click="AddRating(order)">评价</span>
             </div>
             <split></split>
           </li>
         </ul>
       </div>
+      <div class="data-loader-order" v-else></div>
     </div>
   </div>
   <v-navigation></v-navigation>
-  <v-addrating ref="add"></v-addrating>
+  <v-addrating ref="add" v-bind:orderdes="orderdes" v-if="orderdes"></v-addrating>
 </div>
 </template>
 
@@ -54,7 +55,8 @@
   export default{
     data() {
       return {
-        orders: []
+        orders: [],
+        orderdes: null
       };
     },
     mounted() {
@@ -63,18 +65,21 @@
       let userid = window.user._id;
       self.$http.post('/order/getUserOrderAndSeller', {userid: userid}).then(function(response) {
         console.log(2000002, response);
-        self.orders = response.data.order;
+        setTimeout(function() {
+          self.orders = response.data.order;
+          setTimeout(function() {
+            self.scroll = new BScroll(self.$refs.order, {
+              click: true
+            });
+          }, 100);
+        }, 500);
         console.log(200003, self.orders);
       });
-      setTimeout(function() {
-        self.scroll = new BScroll(self.$refs.order, {
-          click: true
-        });
-      }, 100);
     },
     methods: {
-      AddRating(event) {
-        this.$refs.add.show();
+      AddRating(order) {
+        this.orderdes = order;
+        console.log('orderdes1', this.orderdes);
       }
     },
     filters: {
@@ -173,5 +178,12 @@
             border-right: 1px solid #c5c5c5
             &:last-child
               border-right: 0
+  .data-loader-order
+    width: 100%
+    height: 100%
+    background: url('../../common/loading.gif') center no-repeat
+    position: absolute
+    top: 0
+    left: 0
 
 </style>

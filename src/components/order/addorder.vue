@@ -70,7 +70,7 @@
     </div>
   </div>
   <div class="confirm">
-    <div class="text">确认订单</div>
+    <div class="text" @click="confirm">确认订单</div>
   </div>
   <v-selectAddress ref="selectaddress"></v-selectAddress>
 </div>
@@ -125,6 +125,34 @@
       },
       selectaddress() {
         this.$refs.selectaddress.show();
+      },
+      confirm() {
+        console.log('seller', this.seller);
+        console.log('currentFoods', this.currentFoods);
+        console.log('userAddress', this.userAddress);
+        console.log('user', window.user);
+        let orderTime = new Date().getTime();
+        let sumPrice = (this.totalPrice + this.deliveryPrice).toFixed(2);
+        console.log('sumPrice', sumPrice);
+        let addData = {
+          seller_id: this.seller._id,
+          user_id: window.user._id,
+          orderTime: orderTime,
+          sumPrice: sumPrice,
+          address: this.userAddress.name + ' ' + this.userAddress.sex + ' ' + this.userAddress.phone + '\n\r' + this.userAddress.address,
+          foods: this.currentFoods.map(item => {
+            return {
+              name: item.name,
+              count: item.count,
+              price: item.price
+            };
+          })
+        };
+        this.$http.post('/order/addOrder', {order: addData}).then(function(response) {
+          this.$parent.empty();
+          window.location.href = '#/order';
+        });
+        console.log('addData', addData);
       }
     },
     components: {

@@ -10,10 +10,10 @@
     </div>
     <div class="address-wrapper">
       <ul>
-        <li class="address-list border-1px" v-for="address in addresses" v-on:click="changeAddress(address)">
+        <li class="address-list border-1px" v-for="address in addresses">
           <div class="addressdes">
-            <i class="icon-check_circle"></i>
-            <div class="addressdes-wrapper">
+            <i v-bind:class="checkboxClass(address._id)" v-on:click="checked(address)"></i>
+            <div class="addressdes-wrapper" v-on:click="changeAddress(address)">
               <div class="des">{{address.address}}</div>
               <div class="contact">
                 <span class="name">{{address.name}}</span>
@@ -39,13 +39,26 @@ export default{
     return {
       addresses: [],
       currentAdress: null,
-      showFlag: false
+      showFlag: false,
+      selected: null
     };
   },
   mounted() {
     this.refresh();
   },
   methods: {
+    checkboxClass(id) {
+      console.log(123132233, id, this.selected);
+      return {
+        'icon-check_circle': true,
+        'checked': id === this.selected
+      };
+    },
+    checked(address) {
+      this.$parent.userAddress = address;
+      this.hide();
+      console.log('selectAddress', address);
+    },
     addAddress() {
       this.currentAdress = {};
     },
@@ -60,6 +73,7 @@ export default{
       self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
         console.log(1234567890, response);
         self.addresses = response.data.address;
+        self.selected = self.addresses[0]._id;
         console.log(1234567890, self.addresses);
       });
     },
@@ -109,30 +123,41 @@ export default{
       box-sizing: border-box
       padding: 33px 15px 19px 15px
       border-1px(rgba(7, 17, 27, 0.2))
-      .addressdes-wrapper
-        .des
-          width: 80%
-          font-size: 16px
-          font-weight: 700
-          white-space: nowrap
-          overflow: hidden
-          text-overflow: ellipsis
-          color: #333
-        .contact
-          padding-top: 10px
-          font-size: 0
-          span
-            font-size: 14px
-            color: #919191
-          .name
-            padding-right: 5px
-          .sex
-            padding-right: 12px
-        i
+      .addressdes
+        box-sizing: border-box
+        padding-left: 24px
+        .icon-check_circle
           position: absolute
-          right: 21px
-          top: 40px
-          font-size: 30px
-          color: #bababa
+          left: 14px
+          font-size: 16px
+          color: #ccc
+          &.checked
+            color: #ff2d4b
+        .addressdes-wrapper
+          .des
+            width: 80%
+            font-size: 16px
+            font-weight: 700
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            color: #333
+          .contact
+            padding-top: 10px
+            font-size: 0
+            span
+              font-size: 14px
+              color: #919191
+            .name
+              padding-right: 5px
+            .sex
+              padding-right: 12px
+          i
+            position: absolute
+            right: 21px
+            top: 40px
+            font-size: 30px
+            color: #bababa
+            
 
 </style>

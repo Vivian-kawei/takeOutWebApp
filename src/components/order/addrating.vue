@@ -1,5 +1,5 @@
 <template>
-<div class="addrating" v-show="showFlag">
+<div class="addrating">
   <div class="ratingheader">
     <div class="wrapper">
       <i class="icon-arrow_lift" v-on:click="hide"></i>
@@ -10,7 +10,7 @@
     <div class="avatar">
       <img width="100%" height="100%">
     </div>
-    <div class="sellername">店名</div>
+    <div class="sellername">{{2}}</div>
     <div class="gade">
       <span>商品评分:</span>
       <input  name="foodgade" placeholder="请输入0~5的整数">
@@ -23,9 +23,8 @@
       <ul>
         <li>
           <div class="recommend-wrapper">
-            <span class="foodname">商品名称</span>
+            <span class="foodname"></span>
             <span class="icon-thumb_up"></span>
-            <span class="icon-thumb_down"></span>
           </div>
         </li>
       </ul>
@@ -40,17 +39,10 @@
 
 <script>
   export default{
-    data() {
-      return {
-        showFlag: false
-      };
-    },
+    props: ['orderdes'],
     methods: {
-      show() {
-        this.showFlag = true;
-      },
       hide() {
-        this.showFlag = false;
+        this.$parent.orderdes = null;
       }
     }
   };

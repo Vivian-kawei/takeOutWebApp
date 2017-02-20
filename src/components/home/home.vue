@@ -27,13 +27,14 @@
       <split></split>
       <div class="seller-warrper" >
       <div class="title border-1px">全部商户</div>
-        <div class="seller">
+        <div class="seller" v-if="sellers.length > 0">
           <ul v-if="sellers">
             <li class="seller-list border-1px" v-for="seller in sellers">
               <v-sellerlist v-bind:seller="seller"></v-sellerlist>
             </li>
           </ul>
         </div>
+        <div class="data-loader-home" v-else></div>
       </div>
     </div>
   </div>
@@ -54,12 +55,14 @@
       let self = this;
       self.$http.get('/seller/getAll').then((response) => {
         console.log(response.data.sellers);
-        self.sellers = response.data.sellers;
         setTimeout(function() {
-          self.scroll = new BScroll(self.$refs.home, {
-            click: true
-          });
-        }, 100);
+          self.sellers = response.data.sellers;
+          setTimeout(function() {
+            self.scroll = new BScroll(self.$refs.home, {
+              click: true
+            });
+          }, 100);
+        }, 500);
       });
       this.getCityPosition();
     },
@@ -214,8 +217,8 @@
         border-1px(rgba(7, 17, 27, 0.1))
       .seller
         padding-bottom: 50px
-        
-
-
-
+      .data-loader-home
+        width: 100%
+        height: 400px
+        background: url('../../common/loading.gif') center no-repeat
 </style>

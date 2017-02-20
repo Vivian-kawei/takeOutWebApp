@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="goods">
+  <div class="goods" v-if="isLoaded">
     <div class="menu-wrapper" ref="menuwrapper">
       <ul>
         <li v-for="(item, index) in goods" class="menu-item" v-bind:class="{'current':currentIndex===index}" v-on:click="selectMenu(index, $event)">
@@ -40,6 +40,7 @@
     </div>
     <shopcart ref="shopcart" v-bind:select-foods="selectFoods" v-bind:delivery-price="seller.deliveryPrice" v-bind:min-price="seller.minPrice" v-bind:seller="seller"></shopcart>
   </div>
+  <div class="data-loader-goods" v-else></div>
   <food v-bind:food="selectedFood" ref="food"></food>
 </div>
 </template>
@@ -63,6 +64,17 @@
       };
     },
     computed: {
+      isLoaded() {
+        var self = this;
+        let flag = Array.isArray(this.goods) && this.goods.length > 0 && !!this.seller;
+        if (flag) {
+          setTimeout(function() {
+            self._calculateHeight();
+            self._initScroll();
+          }, 100);
+        }
+        return flag;
+      },
       currentIndex() {
         for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[ i ];
@@ -91,10 +103,6 @@
     },
     mounted() {
       var self = this;
-      setTimeout(function() {
-        self._calculateHeight();
-        self._initScroll();
-      }, 100);
       self.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
       self.eventHub.$on('cart.add', function(target) {
         self._drop(target);
@@ -265,4 +273,9 @@
             position: absolute
             right: 0
             bottom: 12px
+
+  .data-loader-goods
+    width: 100%
+    height: 400px
+    background: url('../../../common/loading.gif') center no-repeat
 </style>

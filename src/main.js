@@ -24,21 +24,32 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 function isLogin(to, from, next) {
-  console.log(to);
+  let params = arguments;
   ajax.post('/auth/isLogin', '', function(data) {
     data = JSON.parse(data);
     console.log(data);
     if (data.status === 200) {
       console.log(data.result);
       window.user = data.result;
-      next();
+      console.log(2333, params);
+      if (params.length > 1 && typeof params[0] !== 'function') {
+        next();
+      } else {
+        params[0](true);
+      }
     } else {
-      next({ path: '/login' });
+      if (params.length > 1 && typeof params[0] !== 'function') {
+        next({ path: '/login' });
+      } else {
+        params[0](false);
+      }
     }
   }, function() {
     console.log('请求异常');
   });
 }
+
+window.isLogin = isLogin;
 
 let router = new VueRouter({
   routes: [
