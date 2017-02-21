@@ -4,10 +4,9 @@
     <div class="header">
       <h1>订单</h1>
     </div>
-    <split></split>
     <div class="order-wrapper" ref="order">
       <div class="detalis" v-if="orders.length > 0">
-        <ul v-for="order in orders">
+        <ul v-for="(order, index) in orders">
           <li class="order-list">
             <div class="title">
               <div class="avatar">
@@ -31,8 +30,12 @@
               </div>
             </div>
             <div class="buttom">
-              <span>再来一单</span>
-              <span v-on:click="AddRating(order)">评价</span>
+              <div class="seller">再来一单</div>
+              <div class="orderstate">
+                <span v-if="deliveryTime[index] && orderRating">查看评价</span>
+                <span v-if="deliveryTime[index] && !orderRating" v-on:click="AddRating(order, deliveryTime[index])">去评价</span>
+                <span @click="confirm(index)" v-if="!deliveryTime[index]">确认收货</span>
+              </div>
             </div>
             <split></split>
           </li>
@@ -42,7 +45,7 @@
     </div>
   </div>
   <v-navigation></v-navigation>
-  <v-addrating ref="add" v-bind:orderdes="orderdes" v-if="orderdes"></v-addrating>
+  <v-addrating ref="add" v-bind:orderdes="orderdes"  v-if="orderdes"></v-addrating>
 </div>
 </template>
 
@@ -52,11 +55,14 @@
   import navigation from 'components/navigation/navigation';
   import addrating from 'components/order/addrating';
   import {formatDate} from 'common/js/date';
+  import Vue from 'vue';
   export default{
     data() {
       return {
         orders: [],
-        orderdes: null
+        orderdes: null,
+        deliveryTime: [],
+        orderRating: null
       };
     },
     mounted() {
@@ -77,9 +83,13 @@
       });
     },
     methods: {
-      AddRating(order) {
+      AddRating(order, deliveryTime) {
+        Vue.set(order, 'deliveryTime', deliveryTime);
         this.orderdes = order;
         console.log('orderdes1', this.orderdes);
+      },
+      confirm(index) {
+        Vue.set(this.deliveryTime, index, new Date().getTime());
       }
     },
     filters: {
@@ -168,7 +178,8 @@
           height: 44px
           width: 100%
           box-sizing:border-box
-          span
+          .seller, .orderstate
+            display: inline-block
             flex: 1
             box-sizing:border-box
             padding-top: 16px

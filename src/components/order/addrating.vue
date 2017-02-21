@@ -8,42 +8,95 @@
   </div>
   <div class="ratingContent">
     <div class="avatar">
-      <img width="100%" height="100%">
+      <img width="100%" height="100%" v-bind:src="orderdes.seller_id.avatar">
     </div>
-    <div class="sellername">{{2}}</div>
+    <div class="sellername">{{orderdes.seller_id.name}}</div>
     <div class="gade">
       <span>商品评分:</span>
-      <input  name="foodgade" placeholder="请输入0~5的整数">
+      <star :size="36" :score="star" :click="setStart"></star>
     </div>
     <div class="deliverytime">
-      <span>配送时长:</span>
-      <input  name="deliverytime" placeholder="请输入收到货物所需的时间">
+      <span class="label">配送时长:</span>
+      <span class="time">{{time}}</span>
     </div>
     <div class="recommend">
-      <ul>
+      <ul v-for="food in orderdes.foods">
         <li>
           <div class="recommend-wrapper">
-            <span class="foodname"></span>
-            <span class="icon-thumb_up"></span>
+            <span class="foodname">{{food.name}}</span>
+            <i v-bind:class="checkboxClass(food.name)" v-on:click="checked(food.name)"></i>
           </div>
         </li>
       </ul>
     </div>
     <div class="rating-conetnt">
-      <input type="text" name="rating" placeholder="点评一下吧，您的意见很重要哦">
+      <textarea name="rating" placeholder="点评一下吧，您的意见很重要哦" maxlength="50" v-model="ratingdesc"></textarea>
     </div>
-    <button type="button" class="save">保存</button>
+    <button type="button" class="save" @click="save">保存</button>
   </div>
 </div>
 </template>
 
 <script>
+  import star from 'components/star/star';
   export default{
     props: ['orderdes'],
+    data() {
+      return {
+        star: 0,
+        recommend: [],
+        ratingdesc: ''
+      };
+    },
+    computed: {
+      time() {
+        return parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60) + '分钟';
+      }
+    },
     methods: {
       hide() {
         this.$parent.orderdes = null;
+      },
+      setStart(index) {
+        this.star = index + 1;
+      },
+      checkboxClass(name) {
+        return {
+          'icon-thumb_up': true,
+          'checked': this.recommend.indexOf(name) > -1
+        };
+      },
+      checked(name) {
+        if (this.recommend.indexOf(name) > -1) {
+          this.recommend.splice(this.recommend.indexOf(name), 1);
+        } else {
+          this.recommend.push(name);
+        }
+      },
+      save() {
+        let self = this;
+        let rateTime = new Date().getTime();
+        let addData = {
+          seller_id: this.orderdes.seller_id._id,
+          order_id: this.orderdes._id,
+          user_id: this.orderdes.user_id,
+          username: window.user.name,
+          rateTime: rateTime,
+          deliveryTime: parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60),
+          score: this.star,
+          rateType: this.star <= 2 ? 1 : 0,
+          text: this.ratingdesc,
+          avatar: 'http://static.galileo.xiaojukeji.com/static/tms/default_header.png',
+          recommend: this.recommend
+        };
+        console.log('addData', addData);
+        this.$http.post('/ratings/addOrderRating', {rating: addData}).then(function(response) {
+          self.hide();
+        });
       }
+    },
+    components: {
+      'star': star
     }
   };
 </script>
@@ -102,31 +155,38 @@
         input
           flex: 1
           border-bottom: 1px solid rgba(7, 17, 27, 0.2)
+          outline: none
       .deliverytime
         display: flex
         margin-top: 10px
-        span
+        .label
           flex: 0 0 64px
           margin-right: 10px
           font-weight: 700
-        input
+        .time
           flex: 1
-          border-bottom: 1px solid rgba(7, 17, 27, 0.2)
       .recommend
         margin-top: 10px
         .recommend-wrapper
           display: flex
+          padding: 10px 0
           .foodname
             flex: 1
           .icon-thumb_up
             flex: 0 0 40px
-          .icon-thumb_down
-            flex: 0 0 40px
+            color: #ccc
+            &.checked
+              color: rgb(0, 160, 220)
       .rating-conetnt
         width:100%
         height: 100px
         margin-top: 10px
-        border: 1px solid rgba(7, 17, 27, 0.2)
+        textarea
+          width: 100%
+          height: 100%
+          outline: none
+          resize: none
+          border: 1px solid #ccc
       .save
         margin: 16px 0
         width: 100%

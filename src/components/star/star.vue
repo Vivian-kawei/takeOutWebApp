@@ -1,6 +1,6 @@
 <template>
   <div class="star" v-bind:class="starType">
-    <span v-for="itemClass in itemClasses" v-bind:class="itemClass" class="star-item" track-by="$index"></span>
+    <span v-for="(itemClass, index) in itemClasses" v-bind:class="itemClass" class="star-item" track-by="$index" @click="click(index)"></span>
   </div>
 </template>
 
@@ -17,6 +17,10 @@
       },
       score: {
         type: Number
+      },
+      click: {
+        type: Function,
+        default: function() {}
       }
     },
     computed: {
