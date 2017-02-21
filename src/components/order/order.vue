@@ -32,9 +32,9 @@
             <div class="buttom">
               <div class="seller">再来一单</div>
               <div class="orderstate">
-                <span v-if="deliveryTime[index] && orderRating">查看评价</span>
-                <span v-if="deliveryTime[index] && !orderRating" v-on:click="AddRating(order, deliveryTime[index])">去评价</span>
-                <span @click="confirm(index)" v-if="!deliveryTime[index]">确认收货</span>
+                <span v-if="order.status === 2" v-on:click="checkRatings">查看评价</span>
+                <span v-if="order.status === 1" v-on:click="AddRating(order, index)">去评价</span>
+                <span @click="confirm(index)" v-if="order.status === 0">确认收货</span>
               </div>
             </div>
             <split></split>
@@ -44,8 +44,8 @@
       <div class="data-loader-order" v-else></div>
     </div>
   </div>
-  <v-navigation></v-navigation>
-  <v-addrating ref="add" v-bind:orderdes="orderdes"  v-if="orderdes"></v-addrating>
+  <v-checkRatings ref="checkratings"></v-checkRatings>
+  <v-addrating v-bind:orderdes="orderdes"  v-if="orderdes"></v-addrating>
 </div>
 </template>
 
@@ -54,6 +54,7 @@
   import split from 'components/split/split';
   import navigation from 'components/navigation/navigation';
   import addrating from 'components/order/addrating';
+  import checkRatings from 'components/order/checkRatings';
   import {formatDate} from 'common/js/date';
   import Vue from 'vue';
   export default{
@@ -61,7 +62,7 @@
       return {
         orders: [],
         orderdes: null,
-        deliveryTime: [],
+        deliveryTime: null,
         orderRating: null
       };
     },
@@ -73,23 +74,47 @@
         console.log(2000002, response);
         setTimeout(function() {
           self.orders = response.data.order;
+          console.log(200003, self.orders);
           setTimeout(function() {
             self.scroll = new BScroll(self.$refs.order, {
               click: true
             });
           }, 100);
         }, 500);
-        console.log(200003, self.orders);
       });
     },
     methods: {
-      AddRating(order, deliveryTime) {
-        Vue.set(order, 'deliveryTime', deliveryTime);
+      AddRating(order, index) {
         this.orderdes = order;
         console.log('orderdes1', this.orderdes);
+        Vue.set(this.orders[index], 'status', 2);
+        console.log('status', this.orders[index]);
+        let self = this;
+        let updateData = {
+          _id: this.orders[index]._id,
+          status: 2
+        };
+        console.log(updateData);
+        self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+        });
       },
       confirm(index) {
-        Vue.set(this.deliveryTime, index, new Date().getTime());
+        Vue.set(this.orders[index], 'status', 1);
+        console.log('status', this.orders[index]);
+        let self = this;
+        let deliveryTime = new Date().getTime();
+        let updateData = {
+          _id: this.orders[index]._id,
+          deliveryTime: deliveryTime,
+          status: 1
+        };
+        console.log(updateData);
+        self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+        });
+      },
+      checkRatings(event) {
+        console.log(123);
+        this.$refs.checkratings.show();
       }
     },
     filters: {
@@ -101,7 +126,8 @@
     components: {
       split,
       'v-navigation': navigation,
-      'v-addrating': addrating
+      'v-addrating': addrating,
+      'v-checkRatings': checkRatings
     }
   };
 </script>

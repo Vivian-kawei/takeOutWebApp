@@ -40,4 +40,22 @@ router.post('/addOrder', function(req, res) {
         }
     });
 });
+
+//根据订单ID设置订单状态
+router.post('/setOrderStatus', function(req, res) {
+    let order = req.body.order;
+    Order.findByIdAndUpdate({_id: order._id}, order, function (err, order) {
+        if (err) {
+            res.json({
+                status: 404,
+                order: []
+            });
+        } else {
+            res.json({
+                status: 200,
+                order: order
+            });
+        }
+    });
+});
 module.exports = router;

@@ -50,4 +50,23 @@ router.post('/addOrderRating', function(req, res) {
     }
 });
 
+//根据用户ID查询ratings的关联查询
+router.get('/getUserRatingByUserID', function(req, res) {
+    let user = req.session.user;
+    let userid = user._id;
+    if (user) {
+        Ratings.find({user_id: userid}).populate('seller_id').exec((err,ratings) => {
+            console.log(err,ratings);
+            res.json({
+                status: 200,
+                ratings: ratings
+            });
+        })
+    } else {
+        res.json({
+            status: 404,
+            ratings: []
+        });
+    }
+});
 module.exports = router;

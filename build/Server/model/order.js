@@ -12,7 +12,9 @@ let orderSchema = new mongoose.Schema({
     orderTime      : Number,
     foods          : [foodSchema],
     sumPrice       : Number,
-    address        : String
+    address        : String,
+    status         : Number,
+    deliveryTime   : Number
 });
 
 mongoose.model('order', orderSchema);

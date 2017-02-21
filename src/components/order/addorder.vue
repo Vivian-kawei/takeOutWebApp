@@ -140,6 +140,8 @@
           orderTime: orderTime,
           sumPrice: sumPrice,
           address: this.userAddress.name + ' ' + this.userAddress.sex + ' ' + this.userAddress.phone + '\n\r' + this.userAddress.address,
+          status: 0,
+          deliveryTime: 0,
           foods: this.currentFoods.map(item => {
             return {
               name: item.name,
