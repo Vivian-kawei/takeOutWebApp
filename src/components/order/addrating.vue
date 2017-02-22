@@ -45,11 +45,14 @@
       return {
         star: 0,
         recommend: [],
-        ratingdesc: ''
+        ratingdesc: '',
+        status: 1
       };
     },
     computed: {
       time() {
+        console.log(123455555, this.orderdes);
+        console.log(123466666, this.orderdes.orderTime);
         return parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60) + '分钟';
       }
     },
@@ -92,6 +95,14 @@
         console.log('addData', addData);
         this.$http.post('/ratings/addOrderRating', {rating: addData}).then(function(response) {
           self.hide();
+        });
+
+        let updateData = {
+          _id: this.orderdes._id,
+          status: 2
+        };
+        console.log(updateData);
+        self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
         });
       }
     },

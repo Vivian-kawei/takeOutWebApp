@@ -32,8 +32,8 @@
             <div class="buttom">
               <div class="seller">再来一单</div>
               <div class="orderstate">
-                <span v-if="order.status === 2" v-on:click="checkRatings">查看评价</span>
-                <span v-if="order.status === 1" v-on:click="AddRating(order, index)">去评价</span>
+                <span v-if="order.status === 2 " v-on:click="checkRatings">查看评价</span>
+                <span v-if="order.status === 1 " v-on:click="AddRating(order, index)">去评价</span>
                 <span @click="confirm(index)" v-if="order.status === 0">确认收货</span>
               </div>
             </div>
@@ -44,8 +44,9 @@
       <div class="data-loader-order" v-else></div>
     </div>
   </div>
-  <v-checkRatings ref="checkratings"></v-checkRatings>
+  <v-checkRatings ref="checkratings" v-if="ratings" v-bind:ratings="ratings"></v-checkRatings>
   <v-addrating v-bind:orderdes="orderdes"  v-if="orderdes"></v-addrating>
+  <v-navigation></v-navigation>
 </div>
 </template>
 
@@ -63,7 +64,8 @@
         orders: [],
         orderdes: null,
         deliveryTime: null,
-        orderRating: null
+        orderRating: null,
+        ratings: []
       };
     },
     mounted() {
@@ -82,25 +84,22 @@
           }, 100);
         }, 500);
       });
+      self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
+        console.log(12345678909, response.data.ratings);
+        self.ratings = response.data.ratings;
+      });
     },
     methods: {
       AddRating(order, index) {
         this.orderdes = order;
         console.log('orderdes1', this.orderdes);
-        Vue.set(this.orders[index], 'status', 2);
-        console.log('status', this.orders[index]);
-        let self = this;
-        let updateData = {
-          _id: this.orders[index]._id,
-          status: 2
-        };
-        console.log(updateData);
-        self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+        let orderid = this.orderdes._id;
+        this.$http.post('/order/getOrderstatus', {orderid: orderid}).then(function(response) {
+          this.orderdes.status = response.data.order[0].status;
+          this.orderdes.deliveryTime = response.data.order[0].deliveryTime;
         });
       },
       confirm(index) {
-        Vue.set(this.orders[index], 'status', 1);
-        console.log('status', this.orders[index]);
         let self = this;
         let deliveryTime = new Date().getTime();
         let updateData = {
@@ -108,12 +107,11 @@
           deliveryTime: deliveryTime,
           status: 1
         };
-        console.log(updateData);
         self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+          Vue.set(this.orders[index], 'status', 1);
         });
       },
-      checkRatings(event) {
-        console.log(123);
+      checkRatings() {
         this.$refs.checkratings.show();
       }
     },

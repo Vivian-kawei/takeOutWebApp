@@ -69,4 +69,39 @@ router.get('/getUserRatingByUserID', function(req, res) {
         });
     }
 });
+
+//根据用户ID和订单ID查询订单是否被评论
+router.post('/getOrderIsRatedByUserIDAndOrderID', function(req, res) {
+    let user = req.session.user;
+    let orderid = req.body.orderid;
+    if (user) { 
+        let userid = user._id;
+        Ratings.find({user_id: userid, order_id: orderid}).exec((err,ratings) => {
+            if (err) {
+                res.json({
+                    status: 404,
+                    error: []
+                });
+            } else {
+                if (ratings.length > 0){
+                    res.json({
+                        status: 200,
+                        result: '已评论'
+                    });
+                }else{
+                    res.json({
+                        status: 500,
+                        result: '未评论'
+                    })
+                }
+            }
+        })
+    } else {
+        res.json({
+            status: 500,
+            result: '未评论'
+        })
+    }
+});
+
 module.exports = router;

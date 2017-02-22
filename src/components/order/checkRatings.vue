@@ -1,8 +1,9 @@
 <template>
 <div class="checkRatings" v-show="showFlag">
   <div class="myRatings">
-    <div class="header">
-      <h1>我的评论</h1>
+    <div class="checkRatingsheader">
+      <i class="icon-arrow_lift" v-on:click="hide"></i>
+      <div class="title">我的评论</div>
     </div>
     <div class="ratings-wrapper" ref="ratings">
       <div class="detalis">
@@ -23,13 +24,13 @@
               <div class="star-wrapper">
                 <star :size="24" :score="rating.score"></star>
                 <span class="delivery">{{rating.deliveryTime}}分钟</span>
-                <span class="ratingTime">{{rating.rateTime}}</span>
+                <span class="ratingTime">{{rating.rateTime | formatDate}}</span>
               </div>
               <div class="recommend" v-show="rating.recommend && rating.recommend.length">
                 <i class="icon-thumb_up"></i>
                 <span class="foodname" v-for="item in rating.recommend">{{item}}</span>
               </div>
-              <div class="rating" v-show="rating.text && rating.text.text">{{rating.text}}</div>
+              <div class="rating" v-show="rating.text && rating.text.length">{{rating.text}}</div>
             </div>
             <split></split>
           </li>
@@ -49,17 +50,13 @@
   export default{
     data() {
       return {
-        showFlag: false,
-        ratings: {
-          type: Object
-        }
+        showFlag: false
       };
     },
-    mounted() {
-      this.$http.get('/ratings/getUserRatingByUserID').then((response) => {
-        console.log(12345678909, response.data.ratings);
-        this.ratings = response.data.ratings;
-      });
+    props: {
+      ratings: {
+        type: Array
+      }
     },
     methods: {
       show() {
@@ -90,6 +87,21 @@
     background: #fff
     width: 100%
     height: 100%
+    .checkRatingsheader
+      box-sizing: border-box 
+      padding: 34px 15px 0 15px
+      width: 100%
+      height: 75px
+      background: #ff2d4b
+      color: #fff
+      .title
+        position: absolute
+        top: 34px
+        left: 45px
+        right: 45px
+        display: inline-block
+        font-weight: 700
+        text-align: center
     .ratings-wrapper
       .detalis
         .ratings-list
@@ -124,13 +136,14 @@
             padding: 10px
             .star-wrapper
               display: flex
+              color: rgb(147, 153, 159)
               star
                 flex: 0 0 50px
               .delivery
                 flex: 0 0 70px
                 font-size: 10px
                 text-align: center
-              .orderTime
+              .ratingTime
                 flex: 1
                 font-size: 10px
                 text-align: right

@@ -58,4 +58,22 @@ router.post('/setOrderStatus', function(req, res) {
         }
     });
 });
+
+//根据订单ID查询订单状态
+router.post('/getOrderstatus', function(req, res) {
+    let orderid = req.body.orderid;
+    Order.find({_id: orderid}).exec((err,order) => {
+        if (err) {
+            res.json({
+                status: 404,
+                order: []
+            });
+        } else {
+            res.json({
+                status: 200,
+                order: order
+            });
+        }
+    });
+});
 module.exports = router;
