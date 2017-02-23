@@ -6,13 +6,18 @@
         <div class="title">我的收藏</div>
       </div>
     </div>
-    <div class="collect-content" v-for="collect in collects">
-      <v-sellerlist v-bind:seller="collect.seller_id"></v-sellerlist>
+    <div class="collect-wrapper" ref="collect">
+      <div class="collect-detail">
+        <div class="collect-content" v-for="collect in collects">
+          <v-sellerlist v-bind:seller="collect.seller_id"></v-sellerlist>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll';
 import sellerlist from 'components/sellerlist/sellerlist';
 export default{
   data() {
@@ -28,6 +33,11 @@ export default{
       self.collects = response.data.collect;
       console.log(33333300003, self.collects);
     });
+    setTimeout(function() {
+      self.scroll = new BScroll(self.$refs.collect, {
+        click: true
+      });
+    }, 100);
   },
   components: {
       'v-sellerlist': sellerlist
@@ -59,6 +69,11 @@ export default{
         a
           float: left
           color: #fff
+    .collect-wrapper
+      position: absolute
+      top: 75px
+      width: 100%
+      overflow: hidden
 
 
 
