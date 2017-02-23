@@ -5,7 +5,7 @@
       <h1>订单</h1>
     </div>
     <div class="order-wrapper" ref="order">
-      <div class="detalis" v-if="orders.length > 0">
+      <div class="detalis" v-if="orders">
         <ul v-for="(order, index) in orders">
           <li class="order-list">
             <div class="title">
@@ -19,14 +19,15 @@
                 </router-link>
               </div>
             </div>
-            <div class="order-content">
+            <div class="order-content" v-on:click="orderDetail(order)">
               <div class="content1">
-                <span class="food-name">{{order.foods[0].name}}</span>
+                <span class="food-name">{{order.foods[0].name}}<span v-if="order.foods.length > 1">等{{order.foods.length}}件商品</span></span>
                 <span class="price">￥{{order.sumPrice}}</span>
               </div>
               <div class="content2">
                 <span class="time">{{order.orderTime  | formatDate}}</span>
-                <span class="state">已完成</span>
+                <span class="state" v-if="order.status === 0">未完成</span>
+                <span class="state" v-else>已完成</span>
               </div>
             </div>
             <div class="buttom">
@@ -45,7 +46,8 @@
     </div>
   </div>
   <v-checkRatings ref="checkratings" v-if="ratings" v-bind:ratings="ratings"></v-checkRatings>
-  <v-addrating v-bind:orderdes="orderdes"  v-if="orderdes"></v-addrating>
+  <v-addrating v-bind:orderdes="orderdes" v-if="orderdes"></v-addrating>
+  <v-orderdetail v-if="orderdetail" v-bind:orderdetail="orderdetail"></v-orderdetail>
   <v-navigation></v-navigation>
 </div>
 </template>
@@ -56,16 +58,18 @@
   import navigation from 'components/navigation/navigation';
   import addrating from 'components/order/addrating';
   import checkRatings from 'components/order/checkRatings';
+  import orderdetail from 'components/order/orderdetail';
   import {formatDate} from 'common/js/date';
   import Vue from 'vue';
   export default{
     data() {
       return {
-        orders: [],
+        orders: null,
         orderdes: null,
         deliveryTime: null,
         orderRating: null,
-        ratings: []
+        ratings: null,
+        orderdetail: null
       };
     },
     mounted() {
@@ -85,11 +89,11 @@
                 click: true
               });
             }, 100);
+            self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
+              console.log(12345678909, response.data.ratings);
+              self.ratings = response.data.ratings;
+            });
           }, 500);
-        });
-        self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
-          console.log(12345678909, response.data.ratings);
-          self.ratings = response.data.ratings;
         });
       },
       AddRating(order, index) {
@@ -115,6 +119,9 @@
       },
       checkRatings() {
         this.$refs.checkratings.show();
+      },
+      orderDetail(order) {
+        this.orderdetail = order;
       }
     },
     filters: {
@@ -127,7 +134,8 @@
       split,
       'v-navigation': navigation,
       'v-addrating': addrating,
-      'v-checkRatings': checkRatings
+      'v-checkRatings': checkRatings,
+      'v-orderdetail': orderdetail
     }
   };
 </script>
@@ -177,6 +185,7 @@
               font-size: 24px
               margin-left: 7px
               color: #c5c5c5
+              vertical-align: -6px
         .order-content
           width: 100%
           height: 92px

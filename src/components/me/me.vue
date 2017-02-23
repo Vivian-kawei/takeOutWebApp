@@ -52,7 +52,7 @@ export default{
         {
           iconClass: 'icon-Message',
           text: '我的评价',
-          href: '/me'
+          href: '/order'
         },
         {
           iconClass: 'icon-service',

@@ -29,7 +29,7 @@
         <div class="addorder-item">
           <i class="icon-left icon-shopping_cart"></i>
           <div class="addorder-wrapper">
-            <div class="addorder-text">商家配送</div>
+            <div class="addorder-text">{{seller.description}}</div>
           </div>
           <i class="icon-right icon-keyboard_arrow_right"></i>
         </div>

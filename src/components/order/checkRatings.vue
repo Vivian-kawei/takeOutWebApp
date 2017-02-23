@@ -7,8 +7,8 @@
     </div>
     <div class="ratings-wrapper" ref="rates">
       <div class="detalis">
-        <ul v-for="rating in ratings">
-          <li class="ratings-list">
+        <ul>
+          <li class="ratings-list" v-for="rating in ratings">
             <div class="title">
               <div class="avatar">
                 <img width="30" height="30" :src="rating.seller_id.avatar">
@@ -58,16 +58,14 @@
         type: Array
       }
     },
-    mounted() {
-      let self = this;
-      setTimeout(function() {
-        self.scroll = new BScroll(self.$refs.rates, {
-          click: true
-        });
-      }, 100);
-    },
     methods: {
       show() {
+        let self = this;
+        setTimeout(function() {
+          self.scroll = new BScroll(self.$refs.rates, {
+            click: true
+          });
+        }, 100);
         this.showFlag = true;
       },
       hide() {
@@ -117,8 +115,6 @@
       width: 100%
       overflow: hidden
       .detalis
-        width: 100%
-        height: 100%
         .ratings-list
           .title
             width: 100%
@@ -147,6 +143,7 @@
                 font-size: 24px
                 margin-left: 7px
                 color: #c5c5c5
+                vertical-align: -6px
           .ratings-content
             padding: 10px
             .star-wrapper
