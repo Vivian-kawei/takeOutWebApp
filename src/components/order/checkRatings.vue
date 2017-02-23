@@ -5,7 +5,7 @@
       <i class="icon-arrow_lift" v-on:click="hide"></i>
       <div class="title">我的评论</div>
     </div>
-    <div class="ratings-wrapper" ref="ratings">
+    <div class="ratings-wrapper" ref="rates">
       <div class="detalis">
         <ul v-for="rating in ratings">
           <li class="ratings-list">
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  // import BScroll from 'better-scroll';
+  import BScroll from 'better-scroll';
   import split from 'components/split/split';
   import star from 'components/star/star';
   import {formatDate} from 'common/js/date';
@@ -57,6 +57,14 @@
       ratings: {
         type: Array
       }
+    },
+    mounted() {
+      let self = this;
+      setTimeout(function() {
+        self.scroll = new BScroll(self.$refs.rates, {
+          click: true
+        });
+      }, 100);
     },
     methods: {
       show() {
@@ -103,7 +111,14 @@
         font-weight: 700
         text-align: center
     .ratings-wrapper
+      position: absolute
+      top: 75px
+      bottom: 50px
+      width: 100%
+      overflow: hidden
       .detalis
+        width: 100%
+        height: 100%
         .ratings-list
           .title
             width: 100%

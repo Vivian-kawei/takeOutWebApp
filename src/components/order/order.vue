@@ -69,27 +69,29 @@
       };
     },
     mounted() {
-      console.log(2000001, window.user);
-      let self = this;
-      let userid = window.user._id;
-      self.$http.post('/order/getUserOrderAndSeller', {userid: userid}).then(function(response) {
-        console.log(2000002, response);
-        setTimeout(function() {
-          self.orders = response.data.order;
-          console.log(200003, self.orders);
-          setTimeout(function() {
-            self.scroll = new BScroll(self.$refs.order, {
-              click: true
-            });
-          }, 100);
-        }, 500);
-      });
-      self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
-        console.log(12345678909, response.data.ratings);
-        self.ratings = response.data.ratings;
-      });
+      this.refresh();
     },
     methods: {
+      refresh() {
+        let self = this;
+        let userid = window.user._id;
+        self.$http.post('/order/getUserOrderAndSeller', {userid: userid}).then(function(response) {
+          console.log(2000002, response);
+          setTimeout(function() {
+            self.orders = response.data.order;
+            console.log(200003, self.orders);
+            setTimeout(function() {
+              self.scroll = new BScroll(self.$refs.order, {
+                click: true
+              });
+            }, 100);
+          }, 500);
+        });
+        self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
+          console.log(12345678909, response.data.ratings);
+          self.ratings = response.data.ratings;
+        });
+      },
       AddRating(order, index) {
         this.orderdes = order;
         console.log('orderdes1', this.orderdes);

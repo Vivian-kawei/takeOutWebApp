@@ -94,7 +94,6 @@
         };
         console.log('addData', addData);
         this.$http.post('/ratings/addOrderRating', {rating: addData}).then(function(response) {
-          self.hide();
         });
 
         let updateData = {
@@ -103,6 +102,9 @@
         };
         console.log(updateData);
         self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+          this.$parent.refresh();
+          this.hide();
+          this.$parent.checkRatings();
         });
       }
     },

@@ -81,6 +81,7 @@ export default{
       this.showFlag = true;
     },
     hide() {
+      this.$parent.refresh();
       this.showFlag = false;
     }
   },

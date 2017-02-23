@@ -103,23 +103,25 @@
       };
     },
     mounted() {
-      console.log('currentFoods', window.user._id);
-      let self = this;
-      let userid = window.user._id;
-      self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
-        console.log(1234567890, response);
-        self.addresses = response.data.address;
-        console.log(1234567890, self.addresses);
-        if (self.addresses) {
-          self.userAddress = self.addresses[0];
-          console.log('userAddress1', self.userAddress);
-        }
-        self.scroll = new BScroll(self.$refs.addroder, {
-          click: true
-        });
-      }, 100);
+      this.refresh();
     },
     methods: {
+      refresh() {
+        let self = this;
+        let userid = window.user._id;
+        self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
+          console.log(1234567890, response);
+          self.addresses = response.data.address;
+          console.log(1234567890, self.addresses);
+          if (self.addresses) {
+            self.userAddress = self.addresses[0];
+            console.log('userAddress1', self.userAddress);
+          }
+          self.scroll = new BScroll(self.$refs.addroder, {
+            click: true
+          });
+        }, 100);
+      },
       hide() {
         this.$parent.currentFoods = null;
       },
