@@ -1,15 +1,16 @@
 <template>
-<div class="orderdetail">
+<div class="orderdetail" v-show="showFlag" v-if="orderdetail">
   <div class="orderdetail-header">
     <div class="header-wrapper">
-      <i class="icon-arrow_lift">
-      <div class="title">sellname</div>
+      <i class="icon-arrow_lift" v-on:click="hide">
+      <div class="title">{{orderdetail.seller_id.name}}</div>
     </div>
   </div>
   <div class="orderdetail-content" ref="orderdetail">
     <div class="orderdetailCcontent-wrapper">
       <div class="orderstatus">
-        <div class="status">订单已完成</div>
+        <div class="status" v-if="orderdetail.status !== 0">订单已完成</div>
+        <div class="status" v-if="orderdetail.status === 0">订单未完成</div>
         <div class="buttom">
           <span class="add">再来一单</span>
           <span class="checkratings">查看评论</span>
@@ -21,31 +22,31 @@
           <div class="orderdsc-wrapper">
             <div class="orderdsc-title">
               <div class="avatar">
-                <img width="30" height="30">
+                <img width="30" height="30" :src="orderdetail.seller_id.avatar">
               </div>
               <div class="seller">
-                <router-link :to="{path: '/seller'}">
-                  <span class="name">seller_id.name</span>
+                <router-link :to="{path: '/seller' + orderdetail.seller_id._id + '/goods'}">
+                  <span class="name">{{orderdetail.seller_id.name}}</span>
                 </router-link>
               </div>
             </div>
             <div class="orderdsc-description">
               <div class="foodlist">
-                <ul>
+                <ul v-for="food in orderdetail.foods">
                   <li>
                     <div class="foods">
-                      <span class="foodname">name</span>
-                      <span class="number">Xcount</span>
-                      <span class="price">￥</span>
+                      <span class="foodname">{{food.name}}</span>
+                      <span class="number">X{{food.count}}</span>
+                      <span class="price">￥{{food.price}}</span>
                     </div>
                   </li>
                 </ul>
               </div>
               <div class="delivery">
                 <span class="deliveryname">配送费</span>
-                <span class="deliveryprice">￥deliveryPrice元</span>
+                <span class="deliveryprice">￥{{orderdetail.seller_id.deliveryPrice}}元</span>
               </div>
-              <div class="orderPay">共支付￥元</div>
+              <div class="orderPay">共支付￥{{orderdetail.sumPrcie}}元</div>
             </div>
           </div>
         </div>
@@ -54,24 +55,24 @@
         <div class="title">其他信息</div>
         <div class="detail-group">
           <div class="detail-item">
-            <span class="item-left">配送方式</span>
+            <span class="item-left">配送方</span>
             <span class="item-middle">:</span>
-            <span class="item-right">配送方式</span>
+            <span class="item-right">{{orderdetail.seller_id.description}}</span>
           </div>
           <div class="detail-item">
             <span class="item-left">配送时间</span>
             <span class="item-middle">:</span>
-            <span class="item-right"></span>
+            <span class="item-right">立即配送</span>
           </div>
           <div class="detail-item">
             <span class="item-left">收货信息</span>
             <span class="item-middle">:</span>
-            <span class="item-right"></span>
+            <span class="item-right">{{orderdetail.address}}</span>
           </div>
           <div class="detail-item">
             <span class="item-left">支付方式</span>
             <span class="item-middle">:</span>
-            <span class="item-right"></span>
+            <span class="item-right">现金支付</span>
           </div>
         </div>
       </div>
@@ -80,8 +81,33 @@
 </div>
 </template>
 <script>
-  // import BScroll from 'better-scroll';
+  import BScroll from 'better-scroll';
   export default{
+    data() {
+      return {
+        showFlag: false
+      };
+    },
+    props: {
+      orderdetail: {
+        type: Object
+      }
+    },
+    methods: {
+      show() {
+        let self = this;
+        setTimeout(function() {
+          self.scroll = new BScroll(self.$refs.orderdetail, {
+            click: true
+          });
+        }, 100);
+        this.showFlag = true;
+        console.log(12345678909, this.orderdetail);
+      },
+      hide() {
+        this.showFlag = false;
+      }
+    }
   };
 </script>
 
@@ -96,11 +122,13 @@
     height: 100%
     z-index: 10000
     .orderdetail-header
+      position: fixed
       box-sizing: border-box
       padding: 34px 15px 0 15px
       width: 100%
       height: 70px
       background: #fff
+      z-index: 15000
       .header-wrapper
         width: 100%
         font-size: 18px
@@ -221,6 +249,8 @@
             border-bottom: 1px solid rgba(7, 17, 27, 0.1)
             font-size: 14px
             line-height: 44px
+            &:last-child
+              border-bottom: 0px
             .item-left
               display: inline-block
               flex: 0 0 60px

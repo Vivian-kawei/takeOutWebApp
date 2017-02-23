@@ -72,6 +72,8 @@ export default{
     .collect-wrapper
       position: absolute
       top: 75px
+      left: 0
+      bottom: 0
       width: 100%
       overflow: hidden
 

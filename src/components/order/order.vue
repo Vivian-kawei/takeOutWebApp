@@ -47,7 +47,7 @@
   </div>
   <v-checkRatings ref="checkratings" v-if="ratings" v-bind:ratings="ratings"></v-checkRatings>
   <v-addrating v-bind:orderdes="orderdes" v-if="orderdes"></v-addrating>
-  <v-orderdetail v-if="orderdetail" v-bind:orderdetail="orderdetail"></v-orderdetail>
+  <v-orderdetail v-bind:orderdetail="orderdetail" ref="orderdetail"></v-orderdetail>
   <v-navigation></v-navigation>
 </div>
 </template>
@@ -122,6 +122,7 @@
       },
       orderDetail(order) {
         this.orderdetail = order;
+        this.$refs.orderdetail.show();
       }
     },
     filters: {
