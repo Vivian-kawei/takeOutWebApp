@@ -10,9 +10,9 @@
             <span class="adde">{{location}}</span>
             <i class="icon-drop_down"></i>
           </div>
-          <div class="search">
+          <div class="home-search">
             <i class="icon-search"></i>
-            <span>搜索</span>
+            <span v-on:click="search">搜索</span>
           </div>
         </div>
       </div>
@@ -39,6 +39,7 @@
     </div>
   </div>
   <v-navigation></v-navigation>
+  <v-search ref="search"></v-search>
 </div>
 </template>
 
@@ -49,6 +50,7 @@
   import navigation from 'components/navigation/navigation';
   import star from 'components/star/star';
   import sellerlist from 'components/sellerlist/sellerlist';
+  import search from 'components/home/search/search';
   export default{
     mounted() {
       console.dir(this.$refs.home);
@@ -86,6 +88,10 @@
               console.log('定位错误码:', this.getStatus());
           }
         }, {enableHighAccuracy: true});
+      },
+      search(event) {
+        console.log(123);
+        this.$refs.search.show();
       }
     },
     data() {
@@ -126,7 +132,8 @@
       'star': star,
       'v-swiper': swiper,
       'v-navigation': navigation,
-      'v-sellerlist': sellerlist
+      'v-sellerlist': sellerlist,
+      'v-search': search
     }
   };
 </script>
@@ -174,7 +181,7 @@
             font-size: 10px
             color: #fff
 
-        .search
+        .home-search
           width: 74px
           height: 24px
           border-radius: 25px
