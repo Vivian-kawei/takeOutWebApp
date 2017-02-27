@@ -254,7 +254,7 @@
             color: rgb(147, 153, 159)
           .desc
             margin-bottom: 8px
-            line-height: 12px
+            line-height: 16px
           .extra
             .count
               margin-right: 8px

@@ -24,7 +24,7 @@
             <ul v-for="searchResult in searchResults">
               <li>
                 <div class="searchlist border-1px">
-                  <!--<router-link :to="{path: '/seller/' + seller._id + '/goods'}">-->
+                  <router-link :to="{path: '/seller/' + getSeller(searchResult)._id + '/goods'}">
                     <div class="seller">
                         <div class="avatar">
                           <img width="100%" height="100%" :src="getSeller(searchResult).avatar">
