@@ -57,3 +57,4 @@ require('../model/user');
 require('../model/address');
 require('../model/order');
 require('../model/collect');
+require('../model/search');

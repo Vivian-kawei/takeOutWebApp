@@ -20,6 +20,7 @@ var auth = require('./Server/routes/auth'); // autn路由
 var address = require('./Server/routes/address'); // address路由
 var order = require('./Server/routes/order'); // order路由
 var collect = require('./Server/routes/collect'); // collect路由
+var search = require('./Server/routes/search'); // collect路由
 
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -52,6 +53,7 @@ app.use('/auth', auth);
 app.use('/address', address);
 app.use('/order', order);
 app.use('/collect', collect);
+app.use('/search', search);
 
 var compiler = webpack(webpackConfig)
 

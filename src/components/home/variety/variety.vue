@@ -16,7 +16,8 @@
         </div>
       </div>
     </div>
-    <v-sellers v-bind:sellers="currentSellers"></v-sellers>
+    <v-sellers v-bind:sellers="currentSellers" v-if="sellers"></v-sellers>
+    <div class="data-loader-variety" v-else></div>
   </div>
 </template>
 
@@ -193,5 +194,9 @@
             bottom: -3px
             left: 0
             border-bottom: 2px solid #ff2d4b
+    .data-loader-variety
+      width: 100%
+      height: 400px
+      background: url('../../../common/loading.gif') center no-repeat
 
 </style>
