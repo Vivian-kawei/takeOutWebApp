@@ -51,14 +51,18 @@
                   }
                 });
               } else {
-                console.log('请输入由英文字母与数字组成的6~10位密码');
+                /* eslint-disable no-undef */
+                alert('请输入由英文字母与数字组成的6~10位密码');
               }
             } else {
-              console.log('请输入正确手机号');
+              /* eslint-disable no-undef */
+              alert('请输入正确手机号');
             }
         } else {
-          console.log('填写信息不完整');
+          /* eslint-disable no-undef */
+          alert('填写信息不完整');
         }
+        this.hide();
       }
     }
   };

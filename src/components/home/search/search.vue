@@ -58,7 +58,7 @@
                         <p class="foodname" v-html="searchResult.foods[2].query_name"></p>
                       </div>
                     </div>
-                  <!--</router-link>-->
+                  </router-link>
                 </div>
               </li>
             </ul>
@@ -81,6 +81,15 @@
           searchResults: null
         };
       },
+      watch: {
+        query(val) {
+          if (val) {
+            this.search();
+          } else {
+            this.searchResults = null;
+          }
+        }
+      },
       methods: {
         show() {
           this.showFlag = true;
@@ -92,7 +101,6 @@
         },
         selectWord(word) {
           this.query = word;
-          this.search();
         },
         search() {
           let self = this;
@@ -101,13 +109,12 @@
             this.$http.post('/search/search', {q: this.query}).then(function(response) {
               console.log(response.data.results);
               self.searchResults = response.data.results;
-              console.log(self.searchResults);
+              setTimeout(function() {
+                self.scroll = new BScroll(self.$refs.searchresults, {
+                  click: true
+                });
+              }, 50);
             });
-            setTimeout(function() {
-              self.scroll = new BScroll(self.$refs.searchresults, {
-                click: true
-              });
-            }, 100);
           }
         },
         getSeller(searchResult) {
@@ -249,7 +256,7 @@
                       padding-left: 7px
             .search-foods
               overflow: hidden
-              padding: 0 20px 10px 20px
+              padding: 0 16px 18px 16px
               .search-food
                 float: left
                 width: 30%

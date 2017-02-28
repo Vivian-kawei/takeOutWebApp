@@ -79,8 +79,8 @@
         self.$http.get('/seller/getSellerByTypes').then((response) => {
           console.log(response.data.sellers);
           self.sellers = response.data.sellers;
+          self._initNat();
         });
-        self._initNat();
       } else {
         self.$http.get('/seller/getSellerByType?seller_type=' + self.$route.params.type).then((response) => {
           console.log(response.data.sellers);

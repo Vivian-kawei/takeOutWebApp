@@ -45,47 +45,52 @@
     padding: 20px 20px
     position: relative
     border-bottom: 1px solid rgba(7, 17, 27, 0.1)
-    .avatar
-      display: inline-block
-      width: 76px
+    a
+      width: 100%
       height: 100%
-    .sellerlist-content
-      display: inline-block
-      vertical-align: top
-      margin:0px 0 0 10px
-      .sellerlist-name
-        .name
-          font-size: 16px
-          line-height: 24px
-          font-weight: 700
-          color: #333333
-      .sale
-        .star
-          display: inline-block
-          margin-right: 8px
-          vertical-align: top
-        .text
-          font-size: 10px
-          line-height: 16px
-          color: #7e8c8d
-        .time
-          display: inline-block
-          position: absolute
-          font-size: 10px
-          line-height: 16px
-          top: 45%
-          right: 25px
-          color: #7e8c8d
-      .dilivery
-        .text
-          font-size: 10px
-          line-height: 16px
-          border-right: 1px solid rgba(7, 17, 27, 0.1)
-          padding-right: 7px
-          color: #7e8c8d
-          &:last-child
-            border-right: 0
-            padding-left: 7px
+      display: block
+      position: relative
+      padding-left: 86px
+      .avatar
+        width: 76px
+        height: 100%
+        position: absolute
+        top: 0
+        left: 0
+      .sellerlist-content
+        .sellerlist-name
+          .name
+            font-size: 16px
+            line-height: 24px
+            font-weight: 700
+            color: #333333
+        .sale
+          .star
+            display: inline-block
+            margin-right: 8px
+            vertical-align: top
+          .text
+            font-size: 10px
+            line-height: 16px
+            color: #7e8c8d
+          .time
+            display: inline-block
+            position: absolute
+            font-size: 10px
+            line-height: 16px
+            top: 45%
+            right: 25px
+            color: #7e8c8d
+        .dilivery
+          .text
+            font-size: 10px
+            line-height: 16px
+            border-right: 1px solid rgba(7, 17, 27, 0.1)
+            padding-right: 7px
+            color: #7e8c8d
+            &:last-child
+              border-right: 0
+              padding-left: 7px
 
     
 

@@ -3,7 +3,7 @@
   <div class="me">
     <div class="header">
       <div class="dse">
-        <p class="username">用户名</p>
+        <p class="username">{{getUserName(user.name)}}</p>
         <span class="exit" @click="exit">退出</span>
       </div>
       <div class="userimage">
@@ -63,12 +63,14 @@ export default{
       count: {
         type: Number
       },
-      collects: []
+      collects: [],
+      user: {}
     };
   },
   mounted() {
     console.log(1234567, window.user);
     let userid = window.user._id;
+    this.user = window.user;
     let self = this;
     self.$http.post('/collect/getUserCollectByUserID', {userid: userid}).then(function(response) {
       console.log(33333000002, response);
@@ -84,6 +86,10 @@ export default{
       self.$http.post('/auth/exit').then((response) => {
         window.location.href = '/';
       });
+    },
+    getUserName(name) {
+      name = name + '';
+      return name.substring(0, 3) + '*****' + name.substring(name.length - 3, name.length);
     }
   },
   components: {

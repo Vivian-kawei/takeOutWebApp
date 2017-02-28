@@ -95,11 +95,16 @@
           sex: this.form.sex,
           address: this.form.address
         };
-        console.log(updateData);
-        self.$http.post('/address/updateAddress', {address: updateData}).then(function(response) {
-          this.$parent.refresh();
-          this.hide();
-        });
+        if (updateData.phone && this.isPhone(updateData.phone)) {
+          console.log(updateData);
+          self.$http.post('/address/updateAddress', {address: updateData}).then(function(response) {
+            this.$parent.refresh();
+            this.hide();
+          });
+        } else {
+          /* eslint-disable no-undef */
+          alert('请输入正确手机号');
+        }
       },
       add() {
         let self = this;
@@ -110,11 +115,16 @@
           sex: this.form.sex,
           address: this.form.address
         };
-        console.log(123445675423421322, addData);
-        self.$http.post('/address/addAddress', {address: addData}).then(function(response) {
-          this.$parent.refresh();
-          this.hide();
-        });
+        if (addData.phone && this.isPhone(addData.phone)) {
+          console.log(123445675423421322, addData);
+          self.$http.post('/address/addAddress', {address: addData}).then(function(response) {
+            this.$parent.refresh();
+            this.hide();
+          });
+        } else {
+          /* eslint-disable no-undef */
+          alert('请输入正确手机号');
+        }
       },
       delect() {
         let self = this;
@@ -124,6 +134,9 @@
           this.$parent.refresh();
           this.hide();
         });
+      },
+      isPhone(phone) {
+        return /^1[3|4|5|8][0-9]\d{4,8}$/.test(phone);
       }
     }
   };

@@ -162,8 +162,10 @@
             .recommend
               padding-top: 10px
               font-size: 14px
+              overflow: hidden
               .icon-thumb_up, .foodname
-                margin: 0 8px 4px 0
+                float: left
+                margin: 4px 6px
               .icon-thumb_up
                 color: rgb(0, 160, 220)
               .foodname

@@ -12,8 +12,7 @@
         <div class="status" v-if="orderdetail.status !== 0">订单已完成</div>
         <div class="status" v-if="orderdetail.status === 0">订单未完成</div>
         <div class="buttom">
-          <span class="add">再来一单</span>
-          <span class="checkratings">查看评论</span>
+          <router-link class="add" :to="{path: '/seller/' + orderdetail.seller_id._id + '/goods'}">再来一单</router-link>
         </div>
       </div>
       <span class="orderdsc-title">订单明细</span>
@@ -25,7 +24,7 @@
                 <img width="30" height="30" :src="orderdetail.seller_id.avatar">
               </div>
               <div class="seller">
-                <router-link :to="{path: '/seller' + orderdetail.seller_id._id + '/goods'}">
+                <router-link :to="{path: '/seller/' + orderdetail.seller_id._id + '/goods'}">
                   <span class="name">{{orderdetail.seller_id.name}}</span>
                 </router-link>
               </div>

@@ -6,38 +6,41 @@
       <div class="title">添加评价</div>
     </div>
   </div>
-  <div class="ratingContent">
-    <div class="avatar">
-      <img width="100%" height="100%" v-bind:src="orderdes.seller_id.avatar">
+  <div class="ratingContent-wrapper" ref="ratingcontent">
+    <div class="ratingContent">
+      <div class="avatar">
+        <img width="100%" height="100%" v-bind:src="orderdes.seller_id.avatar">
+      </div>
+      <div class="sellername">{{orderdes.seller_id.name}}</div>
+      <div class="gade">
+        <span>商品评分:</span>
+        <star :size="36" :score="star" :click="setStart"></star>
+      </div>
+      <div class="deliverytime">
+        <span class="label">配送时长:</span>
+        <span class="time">{{time}}</span>
+      </div>
+      <div class="recommend">
+        <ul v-for="food in orderdes.foods">
+          <li>
+            <div class="recommend-wrapper">
+              <span class="foodname">{{food.name}}</span>
+              <i v-bind:class="checkboxClass(food.name)" v-on:click="checked(food.name)"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="rating-conetnt">
+        <textarea name="rating" placeholder="点评一下吧，您的意见很重要哦" maxlength="50" v-model="ratingdesc"></textarea>
+      </div>
+      <button type="button" class="save" @click="save">保存</button>
     </div>
-    <div class="sellername">{{orderdes.seller_id.name}}</div>
-    <div class="gade">
-      <span>商品评分:</span>
-      <star :size="36" :score="star" :click="setStart"></star>
-    </div>
-    <div class="deliverytime">
-      <span class="label">配送时长:</span>
-      <span class="time">{{time}}</span>
-    </div>
-    <div class="recommend">
-      <ul v-for="food in orderdes.foods">
-        <li>
-          <div class="recommend-wrapper">
-            <span class="foodname">{{food.name}}</span>
-            <i v-bind:class="checkboxClass(food.name)" v-on:click="checked(food.name)"></i>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="rating-conetnt">
-      <textarea name="rating" placeholder="点评一下吧，您的意见很重要哦" maxlength="50" v-model="ratingdesc"></textarea>
-    </div>
-    <button type="button" class="save" @click="save">保存</button>
   </div>
 </div>
 </template>
 
 <script>
+  import BScroll from 'better-scroll';
   import star from 'components/star/star';
   export default{
     props: ['orderdes'],
@@ -55,6 +58,14 @@
         console.log(123466666, this.orderdes.orderTime);
         return parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60) + '分钟';
       }
+    },
+    mounted() {
+      let self = this;
+      setTimeout(function() {
+        self.scroll = new BScroll(self.$refs.ratingcontent, {
+          click: true
+        });
+      }, 100);
     },
     methods: {
       hide() {
@@ -144,6 +155,13 @@
           font-weight: 700
           text-align: center
           color: #4d4d4d
+    .ratingContent-wrapper
+      position: absolute
+      top: 75px
+      left: 0
+      bottom: 50px
+      width: 100%
+      overflow: hidden
     .ratingContent
       width: 100%
       box-sizing: border-box

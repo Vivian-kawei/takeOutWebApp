@@ -1,5 +1,5 @@
 <template>
-<div class="variety-sellers" ref="varsellers">
+<div class="variety-sellers" ref="varsellers" :style="{top: $route.params.type === '0' ? '76px' : '50px'}">
     <ul v-if="sellers">
       <li class="seller-list border-1px" v-for="seller in sellers">
         <v-sellerlist v-bind:seller="seller"></v-sellerlist>

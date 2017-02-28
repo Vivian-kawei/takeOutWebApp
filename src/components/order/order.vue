@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="buttom">
-              <div class="seller">再来一单</div>
+              <router-link class="seller" :to="{path: '/seller/' + order.seller_id._id + '/goods'}">再来一单</router-link>
               <div class="orderstate">
                 <span v-if="order.status === 2 " v-on:click="checkRatings">查看评价</span>
                 <span v-if="order.status === 1 " v-on:click="AddRating(order, index)">去评价</span>

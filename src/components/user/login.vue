@@ -50,10 +50,12 @@ export default{
             }
           });
         } else {
-          console.log('请输入正确手机号');
+          /* eslint-disable no-undef */
+          alert('请输入正确手机号');
         }
       } else {
-          console.log('填写信息不完整');
+          /* eslint-disable no-undef */
+          alert('填写信息不完整');
       }
     }
   },
