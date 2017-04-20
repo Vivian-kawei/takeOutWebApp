@@ -36,6 +36,7 @@
       _doregister() {
         var username = this.username;
         var password = this.password;
+        var self = this;
         // 验空
         if (username && password) {
             // 是否符合规格（手机号）
@@ -45,9 +46,12 @@
                 this.$http.post('/auth/doRegister', {username: username, password: password}).then(function(response) {
                   if (response.data.staus === 200) {
                     console.log(response.data.result);
-                    this.hide();
+                    self.hide();
                   } else {
-                    console.log(response.data.result);
+                    /* eslint-disable no-undef */
+                    alert(response.data.result);
+                    self.username = null;
+                    self.password = null;
                   }
                 });
               } else {
@@ -62,7 +66,7 @@
           /* eslint-disable no-undef */
           alert('填写信息不完整');
         }
-        this.hide();
+        // this.hide();
       }
     }
   };
@@ -78,7 +82,7 @@
     height: 100%
     font-size: 0
     .registerHeader
-      box-sizing: border-box 
+      box-sizing: border-box
       padding: 34px 15px 0 15px
       width: 100%
       height: 75px
@@ -107,7 +111,7 @@
       .registerWarpper
         border-radius: 12px
         border: 1px solid rgba(7, 17, 27, 0.1)
-        input 
+        input
           display: block
           box-sizing: border-box
           padding: 20px
