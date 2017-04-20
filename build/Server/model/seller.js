@@ -18,7 +18,7 @@ let sellerSchema = new mongoose.Schema({
     sellCount: Number,
     bulletin: String,
     supports: [supportSchema],
-    avatar: [String],
+    avatar: String,
     pics: [String],
     infos: String,
     sellerType: Number

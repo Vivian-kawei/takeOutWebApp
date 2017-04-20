@@ -98,8 +98,10 @@
         });
       });
       self.$http.get('/ratings/getSellerRatings?seller_id=' + self.$route.params.id).then((response) => {
-        console.log(12345678909, response.data.ratings);
         this.ratings = response.data.ratings;
+        this.ratings.forEach(rating => {
+          rating.avatar = './static/images/pics/default_header.png';
+        });
       });
     },
     methods: {

@@ -277,5 +277,5 @@
   .data-loader-goods
     width: 100%
     height: 400px
-    background: url('../../../common/loading.gif') center no-repeat
+    background: url('/static/images/loading.gif') center no-repeat
 </style>

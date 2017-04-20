@@ -29,9 +29,10 @@ export default{
     let self = this;
     let userid = window.user._id;
     self.$http.post('/collect/getUserCollectByUserID', {userid: userid}).then(function(response) {
-      console.log(33333000002, response);
-      self.collects = response.data.collect;
-      console.log(33333300003, self.collects);
+      self.collects = response.data.collect.map(collect => {
+        collect.seller_id.avatar = './static/images/pics/' + collect.seller_id.avatar;
+        return collect;
+      });
     });
     setTimeout(function() {
       self.scroll = new BScroll(self.$refs.collect, {

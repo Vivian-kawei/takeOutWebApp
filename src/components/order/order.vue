@@ -80,25 +80,27 @@
         let self = this;
         let userid = window.user._id;
         self.$http.post('/order/getUserOrderAndSeller', {userid: userid}).then(function(response) {
-          console.log(2000002, response);
           setTimeout(function() {
-            self.orders = response.data.order;
-            console.log(200003, self.orders);
+            self.orders = response.data.order.map(order => {
+              order.seller_id.avatar = './static/images/pics/' + order.seller_id.avatar;
+              return order;
+            });
             setTimeout(function() {
               self.scroll = new BScroll(self.$refs.order, {
                 click: true
               });
             }, 100);
             self.$http.get('/ratings/getUserRatingByUserID').then((response) => {
-              console.log(12345678909, response.data.ratings);
-              self.ratings = response.data.ratings;
+              self.ratings = response.data.ratings.map(rating => {
+                rating.seller_id.avatar = './static/images/pics/' + rating.seller_id.avatar;
+                return rating;
+              });
             });
           }, 500);
         });
       },
       AddRating(order, index) {
         this.orderdes = order;
-        console.log('orderdes1', this.orderdes);
         let orderid = this.orderdes._id;
         this.$http.post('/order/getOrderstatus', {orderid: orderid}).then(function(response) {
           this.orderdes.status = response.data.order[0].status;
@@ -228,7 +230,7 @@
   .data-loader-order
     width: 100%
     height: 100%
-    background: url('../../common/loading.gif') center no-repeat
+    background: url('/static/images/loading.gif') center no-repeat
     position: absolute
     top: 0
     left: 0

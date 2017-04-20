@@ -30,22 +30,30 @@ export default{
     let self = this;
       self.$http.get('/goods/getSellerAndGoods?seller_id=' + self.$route.params.id).then((response) => {
         self.seller = response.data.goods[0].seller_id;
+        self.seller.avatar = 'static/images/pics/' + self.seller.avatar;
+        if (self.seller.pics && self.seller.pics.length) {
+          self.seller.pics = self.seller.pics.map(pic => {
+            return 'static/images/pics/' + pic;
+          });
+        }
         setTimeout(function() {
           self.goods = response.data.goods;
           /* eslint-disable no-undef */
           let localShopCartData = localStorage.getItem(self.seller._id);
           localShopCartData = JSON.parse(localShopCartData);
-          if (Array.isArray(localShopCartData) && localShopCartData.length > 0) {
-            response.data.goods.forEach(goods => {
-              goods.foods.forEach(food => {
+          self.goods.forEach(goods => {
+            goods.foods.forEach(food => {
+              food.icon = './static/images/pics/' + food.icon;
+              food.image = './static/images/pics/' + food.image;
+              if (Array.isArray(localShopCartData) && localShopCartData.length > 0) {
                 localShopCartData.forEach(localfood => {
                   if (localfood._id === food._id) {
                     Vue.set(food, 'count', localfood.count);
                   }
                 });
-              });
+              }
             });
-          }
+          });
         }, 500);
       });
   },

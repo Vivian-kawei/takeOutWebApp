@@ -107,8 +107,20 @@
           if (this.query) {
             console.log('搜索词为：' + this.query);
             this.$http.post('/search/search', {q: this.query}).then(function(response) {
-              console.log(response.data.results);
               self.searchResults = response.data.results;
+              for (var key in self.searchResults) {
+                let result = self.searchResults[key];
+                if (result.foods && result.foods.length) {
+                  result.foods = result.foods.map(food => {
+                    food.query_image = 'static/images/pics/' + food.query_image;
+                    food.seller_id.avatar = 'static/images/pics/' + food.seller_id.avatar;
+                    return food;
+                  });
+                }
+                if (result.seller) {
+                  result.seller.avatar = 'static/images/pics/' + result.seller.avatar;
+                }
+              }
               setTimeout(function() {
                 self.scroll = new BScroll(self.$refs.searchresults, {
                   click: true

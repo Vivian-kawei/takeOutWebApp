@@ -77,14 +77,18 @@
       let self = this;
       if (self.$route.params.type === '0') {
         self.$http.get('/seller/getSellerByTypes').then((response) => {
-          console.log(response.data.sellers);
           self.sellers = response.data.sellers;
+          self.sellers.forEach(seller => {
+            seller.avatar = 'static/images/pics/' + seller.avatar;
+          });
           self._initNat();
         });
       } else {
         self.$http.get('/seller/getSellerByType?seller_type=' + self.$route.params.type).then((response) => {
-          console.log(response.data.sellers);
           self.sellers = response.data.sellers;
+          self.sellers.forEach(seller => {
+            seller.avatar = 'static/images/pics/' + seller.avatar;
+          });
         });
       }
       let type = parseInt(self.$route.params.type);

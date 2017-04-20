@@ -56,9 +56,11 @@
       console.dir(this.$refs.home);
       let self = this;
       self.$http.get('/seller/getAll').then((response) => {
-        console.log(response.data.sellers);
         setTimeout(function() {
           self.sellers = response.data.sellers;
+          self.sellers.forEach(seller => {
+            seller.avatar = './static/images/pics/' + seller.avatar;
+          });
           setTimeout(function() {
             self.scroll = new BScroll(self.$refs.home, {
               click: true
@@ -227,5 +229,5 @@
       .data-loader-home
         width: 100%
         height: 400px
-        background: url('../../common/loading.gif') center no-repeat
+        background: url('/static/images/loading.gif') center no-repeat
 </style>
