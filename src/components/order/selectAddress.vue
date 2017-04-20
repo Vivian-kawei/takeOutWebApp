@@ -55,7 +55,9 @@ export default{
       };
     },
     checked(address) {
+      console.log('selectAddress1', address);
       this.$parent.userAddress = address;
+      console.log('selectAddress2', this.$parent.userAddress);
       this.hide();
       console.log('selectAddress', address);
     },
@@ -73,7 +75,7 @@ export default{
       self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
         console.log(1234567890, response);
         self.addresses = response.data.address;
-        self.selected = self.addresses[0]._id;
+        self.selected = self.addresses && self.addresses.length && self.addresses[0]._id;
         console.log(1234567890, self.addresses);
       });
     },
@@ -159,6 +161,6 @@ export default{
             top: 40px
             font-size: 30px
             color: #bababa
-            
+
 
 </style>

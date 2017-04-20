@@ -44,9 +44,12 @@ export default{
           this.$http.post('/auth/doLogin', {username: username, password: password}).then(function(response) {
             if (response.data.status === 200) {
               console.log(response.data.result);
+              /* eslint-disable no-undef */
+              alert('成功登陆');
               window.location.href = '/';
             } else {
-              console.log(response.data.result);
+              /* eslint-disable no-undef */
+              alert(response.data.result);
             }
           });
         } else {

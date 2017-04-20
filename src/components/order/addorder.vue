@@ -136,6 +136,12 @@
         let orderTime = new Date().getTime();
         let sumPrice = (this.totalPrice + this.deliveryPrice).toFixed(2);
         console.log('sumPrice', sumPrice);
+        if (!this.userAddress) {
+          /* eslint-disable no-undef */
+          alert('请添加地址');
+          this.selectaddress();
+          return;
+        }
         let addData = {
           seller_id: this.seller._id,
           user_id: window.user._id,

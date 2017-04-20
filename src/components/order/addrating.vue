@@ -87,7 +87,11 @@
           this.recommend.push(name);
         }
       },
-      save() {
+      save(event) {
+        if (!event._constructed) {
+          return;
+        }
+        console.log('评论一次');
         let self = this;
         let rateTime = new Date().getTime();
         let addData = {
@@ -113,8 +117,8 @@
         };
         console.log(updateData);
         self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
-          this.$parent.refresh();
           this.hide();
+          this.$parent.refresh();
           this.$parent.checkRatings();
         });
       }
@@ -135,7 +139,7 @@
     height: 100%
     font-size: 0
     .ratingheader
-      box-sizing: border-box 
+      box-sizing: border-box
       padding: 34px 15px 0 15px
       width: 100%
       height: 75px
