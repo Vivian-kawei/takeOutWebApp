@@ -44,8 +44,10 @@
               if (/^[a-zA-Z0-9]{6,10}$/.test(password)) {
                 console.log({username: username, password: password});
                 this.$http.post('/auth/doRegister', {username: username, password: password}).then(function(response) {
-                  if (response.data.staus === 200) {
-                    console.log(response.data.result);
+                  console.log(response.data);
+                  if (response.data.status === 200) {
+                    /* eslint-disable no-undef */
+                    alert(response.data.result);
                     self.hide();
                   } else {
                     /* eslint-disable no-undef */
