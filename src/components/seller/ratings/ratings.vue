@@ -1,52 +1,53 @@
 <template>
   <div class="ratings" ref="ratings">
-  <div class="ratings-content">
-    <div class="overview">
-      <div class="overview-left">
-        <h1 class="score">{{seller.score}}</h1>
-        <div class="title">综合评分</div>
-        <div class="rank">高于周边商家{{seller.rankRate}}</div>
-      </div>
-      <div class="overview-right">
-        <div class="score-wrapper">
-          <span class="title">服务态度</span>
-          <star :size="36" :score="seller.serviceScore"></star>
-          <span class="score">{{seller.serviceScore}}</span>
+    <div class="ratings-content">
+      <div class="overview">
+        <div class="overview-left">
+          <h1 class="score">{{seller.score}}</h1>
+          <div class="title">综合评分</div>
+          <div class="rank">高于周边商家{{seller.rankRate}}</div>
         </div>
-        <div class="score-wrapper">
-          <span class="title">商品评分</span>
-          <star :size="36" :score="seller.foodScore"></star>
-          <span class="score">{{seller.foodScore}}</span>
-        </div>
-        <div class="delivery-wrapper">
-          <span class="title">送达时间</span>
-          <span class="delivery">{{seller.deliveryTime}}分钟</span>
-        </div>
-      </div>
-    </div>
-    <split></split>
-    <ratingselect v-bind:select-type="selectType" v-bind:only-content="onlyContent" v-bind:desc="desc" v-bind:ratings="ratings"></ratingselect>
-    <div class="ratings-wrapper">
-      <ul>
-        <li v-for="rating in ratings" class="ratings-item" v-show="needShow(rating.rateType,rating.text)">
-          <div class="avatar">
-            <img width="28" height="28" :src="rating.avatar">
+        <div class="overview-right">
+          <div class="score-wrapper">
+            <span class="title">服务态度</span>
+            <star :size="36" :score="seller.serviceScore"></star>
+            <span class="score">{{seller.serviceScore}}</span>
           </div>
-          <div class="content">
-            <h1 class="name">{{rating.username}}</h1>
-            <div class="star-wrapper">
-              <star :size="24" :score="rating.score"></star>
-              <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟</span>
-            </div>
-            <p class="text">{{rating.text}}</p>
-            <div class="recommend" v-show="rating.recommend && rating.recommend.length">
-              <span class="icon-thumb_up"></span>
-              <span v-for="item in rating.recommend" class="item">{{item}}</span>
-            </div>
-            <div class="time">{{rating.rateTime | formatDate}}</div>
+          <div class="score-wrapper">
+            <span class="title">商品评分</span>
+            <star :size="36" :score="seller.foodScore"></star>
+            <span class="score">{{seller.foodScore}}</span>
           </div>
-        </li>
-      </ul>
+          <div class="delivery-wrapper">
+            <span class="title">送达时间</span>
+            <span class="delivery">{{seller.deliveryTime}}分钟</span>
+          </div>
+        </div>
+      </div>
+      <split></split>
+      <ratingselect v-bind:select-type="selectType" v-bind:only-content="onlyContent" v-bind:desc="desc" v-bind:ratings="ratings"></ratingselect>
+      <div class="ratings-wrapper">
+        <ul>
+          <li v-for="rating in ratings" class="ratings-item" v-show="needShow(rating.rateType,rating.text)">
+            <div class="avatar">
+              <img width="28" height="28" :src="rating.avatar">
+            </div>
+            <div class="content">
+              <h1 class="name">{{rating.username}}</h1>
+              <div class="star-wrapper">
+                <star :size="24" :score="rating.score"></star>
+                <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}分钟</span>
+              </div>
+              <p class="text">{{rating.text}}</p>
+              <div class="recommend" v-show="rating.recommend && rating.recommend.length">
+                <span class="icon-thumb_up"></span>
+                <span v-for="item in rating.recommend" class="item">{{item}}</span>
+              </div>
+              <div class="time">{{rating.rateTime | formatDate}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

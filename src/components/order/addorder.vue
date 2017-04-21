@@ -2,7 +2,7 @@
 <div class="addorder">
   <div class="addorder-header">
     <div class="header-wrapper">
-      <i class="icon-arrow_lift" v-on:click="hide">
+      <i class="icon-arrow_lift" v-on:click="hide"></i>
       <div class="title">提交订单</div>
     </div>
   </div>

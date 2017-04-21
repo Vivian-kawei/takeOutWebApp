@@ -2,7 +2,7 @@
   <div class="collect">
     <div class="header">
       <div class="warpper">
-        <router-link class="icon-arrow_lift" :to="{path: '/me'}">
+        <router-link class="icon-arrow_lift" :to="{path: '/me'}"></router-link>
         <div class="title">我的收藏</div>
       </div>
     </div>

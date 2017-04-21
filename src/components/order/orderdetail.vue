@@ -2,7 +2,7 @@
 <div class="orderdetail" v-show="showFlag" v-if="orderdetail">
   <div class="orderdetail-header">
     <div class="header-wrapper">
-      <i class="icon-arrow_lift" v-on:click="hide">
+      <i class="icon-arrow_lift" v-on:click="hide"></i>
       <div class="title">{{orderdetail.seller_id.name}}</div>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <div class="seller-header" v-if="seller">
     <div class="back">
       <router-link :to="{path: '/home'}" class="icon-arrow_lift"></router-link>
-      <i class="icon-share">
+      <i class="icon-share"></i>
     </div>
     <div class="content-wrapper">
       <div class="avatar">

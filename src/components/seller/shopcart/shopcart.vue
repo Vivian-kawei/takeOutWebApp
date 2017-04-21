@@ -46,7 +46,7 @@
     </transition>
   </div>
   <transition name="fade">
-    <div class="list-mask" v-on:click="hideList" v-show="listShow">
+    <div class="list-mask" v-on:click="hideList" v-show="listShow"></div>
   </transition>
   <v-addorder v-if="currentFoods" v-bind:currentFoods="currentFoods" v-bind:seller="seller" v-bind:totalPrice="this.totalPrice" v-bind:deliveryPrice="deliveryPrice"></v-addorder>
   </div>
