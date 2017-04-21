@@ -8,7 +8,7 @@ const Ratings = mongoose.model('rating');
 router.get('/getSellerRatings', function(req, res) {
     let seller_id = req.query.seller_id;
     if (seller_id) {
-        Ratings.find({seller_id}).exec((err,ratings) => {
+        Ratings.find({seller_id}).sort({ rateTime: 'desc' }).exec((err,ratings) => {
             console.log(err,ratings);
             res.json({
                 status: 200,
@@ -55,7 +55,7 @@ router.get('/getUserRatingByUserID', function(req, res) {
     let user = req.session.user;
     let userid = user._id;
     if (user) {
-        Ratings.find({user_id: userid}).populate('seller_id').exec((err,ratings) => {
+        Ratings.find({user_id: userid}).populate('seller_id').sort({ rateTime: 'desc' }).exec((err,ratings) => {
             console.log(err,ratings);
             res.json({
                 status: 200,

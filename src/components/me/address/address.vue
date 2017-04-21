@@ -45,16 +45,13 @@ export default{
     },
     changeAddress(address) {
       this.currentAdress = address;
-      console.log('address', this.currentAdress);
     },
     refresh() {
       console.log(1234567, window.user);
       let self = this;
       let userid = window.user._id;
       self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
-        console.log(1234567890, response);
         self.addresses = response.data.address;
-        console.log(1234567890, self.addresses);
       });
     }
   },
@@ -68,7 +65,7 @@ export default{
 @import "../../../common/stylus/mixin";
   .address
     .header
-      box-sizing: border-box 
+      box-sizing: border-box
       padding: 34px 15px 0 15px
       .wrapper
         width: 100%

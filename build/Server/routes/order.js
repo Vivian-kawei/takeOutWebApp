@@ -8,7 +8,7 @@ const Order = mongoose.model('order');
 router.post('/getUserOrderAndSeller', function(req, res) {
     let userid = req.body.userid;
     if (userid) {
-        Order.find({user_id: userid}).populate('seller_id').exec((err,order) => {
+        Order.find({user_id: userid}).populate('seller_id').sort({ orderTime: 'desc' }).exec((err,order) => {
             console.log(err,order);
             res.json({
                 status: 200,

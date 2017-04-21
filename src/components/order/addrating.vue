@@ -33,7 +33,7 @@
       <div class="rating-conetnt">
         <textarea name="rating" placeholder="点评一下吧，您的意见很重要哦" maxlength="50" v-model="ratingdesc"></textarea>
       </div>
-      <button type="button" class="save" @click="save">保存</button>
+      <button type="button" class="save" @click.stop.prevent="save">保存</button>
     </div>
   </div>
 </div>
@@ -49,18 +49,18 @@
         star: 0,
         recommend: [],
         ratingdesc: '',
-        status: 1
+        status: 1,
+        flag: false
       };
     },
     computed: {
       time() {
-        console.log(123455555, this.orderdes);
-        console.log(123466666, this.orderdes.orderTime);
         return parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60) + '分钟';
       }
     },
     mounted() {
       let self = this;
+      self.flag = true;
       setTimeout(function() {
         self.scroll = new BScroll(self.$refs.ratingcontent, {
           click: true
@@ -91,36 +91,36 @@
         if (!event._constructed) {
           return;
         }
-        console.log('评论一次');
-        let self = this;
-        let rateTime = new Date().getTime();
-        let addData = {
-          seller_id: this.orderdes.seller_id._id,
-          order_id: this.orderdes._id,
-          user_id: this.orderdes.user_id,
-          username: window.user.name,
-          rateTime: rateTime,
-          deliveryTime: parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60),
-          score: this.star,
-          rateType: this.star <= 2 ? 1 : 0,
-          text: this.ratingdesc,
-          avatar: 'http://static.galileo.xiaojukeji.com/static/tms/default_header.png',
-          recommend: this.recommend
-        };
-        console.log('addData', addData);
-        this.$http.post('/ratings/addOrderRating', {rating: addData}).then(function(response) {
-        });
-
-        let updateData = {
-          _id: this.orderdes._id,
-          status: 2
-        };
-        console.log(updateData);
-        self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
-          this.hide();
-          this.$parent.refresh();
-          this.$parent.checkRatings();
-        });
+        console.log(event, '评论一次', this.flag);
+        if (this.flag) {
+          let self = this;
+          let rateTime = new Date().getTime();
+          let addData = {
+            seller_id: this.orderdes.seller_id._id,
+            order_id: this.orderdes._id,
+            user_id: this.orderdes.user_id,
+            username: window.user.name,
+            rateTime: rateTime,
+            deliveryTime: parseInt((this.orderdes.deliveryTime - this.orderdes.orderTime) / 1000 / 60),
+            score: this.star,
+            rateType: this.star <= 2 ? 1 : 0,
+            text: this.ratingdesc,
+            avatar: 'http://static.galileo.xiaojukeji.com/static/tms/default_header.png',
+            recommend: this.recommend
+          };
+          self.flag = false;
+          self.$http.post('/ratings/addOrderRating', {rating: addData}).then(function(response) {
+            let updateData = {
+              _id: self.orderdes._id,
+              status: 2
+            };
+            self.$http.post('/order/setOrderStatus', {order: updateData}).then(function(response) {
+              self.hide();
+              self.$parent.refresh();
+              self.$parent.checkRatings();
+            });
+          });
+        }
       }
     },
     components: {

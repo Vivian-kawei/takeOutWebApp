@@ -101,7 +101,6 @@
           });
         }, 100);
         this.showFlag = true;
-        console.log(12345678909, this.orderdetail);
       },
       hide() {
         this.showFlag = false;

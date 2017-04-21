@@ -44,43 +44,38 @@ export default{
     };
   },
   mounted() {
-    this.refresh();
+    // this.refresh();
   },
   methods: {
     checkboxClass(id) {
-      console.log(123132233, id, this.selected);
       return {
         'icon-check_circle': true,
         'checked': id === this.selected
       };
     },
     checked(address) {
-      console.log('selectAddress1', address);
       this.$parent.userAddress = address;
-      console.log('selectAddress2', this.$parent.userAddress);
+      this.selected = address._id;
       this.hide();
-      console.log('selectAddress', address);
     },
     addAddress() {
       this.currentAdress = {};
     },
     changeAddress(address) {
       this.currentAdress = address;
-      console.log('address', this.currentAdress);
     },
     refresh() {
-      console.log(1234567, window.user);
       let self = this;
       let userid = window.user._id;
+      self.selected = self.$parent.userAddress && self.$parent.userAddress._id || null;
+      console.log(self.selected);
       self.$http.post('/address/getUserAddress', {userid: userid}).then(function(response) {
-        console.log(1234567890, response);
         self.addresses = response.data.address;
-        self.selected = self.addresses && self.addresses.length && self.addresses[0]._id;
-        console.log(1234567890, self.addresses);
       });
     },
     show() {
       this.showFlag = true;
+      this.refresh();
     },
     hide() {
       this.$parent.refresh();
