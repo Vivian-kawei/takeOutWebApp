@@ -102,27 +102,27 @@
             location: '',
             species: [
               {
-                src: 'https://fuss10.elemecdn.com/b/7e/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg',
+                src: './static/images/pics/d1890cf73ae6f2adb97caa39de7fcjpeg.jpeg',
                 text: '美食',
                 type: 0
               },
               {
-                src: 'https://fuss10.elemecdn.com/2/35/696aa5cf9820adada9b11a3d14bf5jpeg.jpeg',
+                src: './static/images/pics/696aa5cf9820adada9b11a3d14bf5jpeg.jpeg',
                 text: '甜品饮品',
                 type: 5
               },
               {
-                src: 'https://fuss10.elemecdn.com/8/83/171fd98b85dee3b3f4243b7459b48jpeg.jpeg',
+                src: './static/images/pics/171fd98b85dee3b3f4243b7459b48jpeg.jpeg',
                 text: '鲜花蛋糕',
                 type: 6
               },
               {
-                src: 'https://fuss10.elemecdn.com/4/34/ea0d51c9608310cf41faa5de6b8efjpeg.jpeg',
+                src: './static/images/pics/ea0d51c9608310cf41faa5de6b8efjpeg.jpeg',
                 text: '蔬果新鲜',
                 type: 7
               },
               {
-                src: 'https://fuss10.elemecdn.com/1/c6/8edcaeb8cd35845946db6673660fcjpeg.jpeg',
+                src: './static/images/pics/8edcaeb8cd35845946db6673660fcjpeg.jpeg',
                 text: '商店超市',
                 type: 8
               }

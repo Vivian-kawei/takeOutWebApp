@@ -286,7 +286,7 @@ export default{
       margin: 0 5px
 
       &.swiper-transition
-      transition: all 0.3s linear
+        transition: all 0.3s linear
 
       &:hover
         opacity: 1
